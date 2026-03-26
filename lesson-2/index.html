@@ -1,0 +1,1596 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Module 2 — Lesson 2: Code Challenges + POST Routes</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 780px;
+        margin: 0 auto;
+      }
+      .card {
+        background: white;
+        padding: 25px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+      .card h2 {
+        color: #1a73e8;
+        margin-top: 0;
+        font-size: 20px;
+        border-bottom: 2px solid #e8f0fe;
+        padding-bottom: 10px;
+      }
+      .card h3 {
+        color: #333;
+        font-size: 16px;
+        margin-top: 25px;
+      }
+      .nav-link {
+        display: inline-block;
+        margin: 10px 5px;
+        padding: 8px 16px;
+        background: #e8f0fe;
+        color: #1a73e8;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 14px;
+      }
+      .nav-link:hover {
+        background: #1a73e8;
+        color: white;
+      }
+
+      /* Code editor */
+      .code-editor {
+        position: relative;
+        margin: 12px 0;
+      }
+      .code-editor textarea {
+        width: 100%;
+        min-height: 180px;
+        padding: 15px;
+        font-family: "Consolas", monospace;
+        font-size: 13px;
+        background: #1e1e1e;
+        color: #d4d4d4;
+        border: 2px solid #333;
+        border-radius: 8px;
+        resize: vertical;
+        box-sizing: border-box;
+        line-height: 1.6;
+        tab-size: 2;
+      }
+      .code-editor textarea:focus {
+        border-color: #1a73e8;
+        outline: none;
+      }
+
+      .code-block {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 16px;
+        border-radius: 8px;
+        font-family: "Consolas", monospace;
+        font-size: 13px;
+        margin: 12px 0;
+        overflow-x: auto;
+        line-height: 1.7;
+      }
+      .code-block .keyword {
+        color: #569cd6;
+      }
+      .code-block .string {
+        color: #ce9178;
+      }
+      .code-block .comment {
+        color: #6a9955;
+      }
+      .code-block .function {
+        color: #dcdcaa;
+      }
+      .code-block .number {
+        color: #b5cea8;
+      }
+      .code-block .property {
+        color: #9cdcfe;
+      }
+
+      .output-box {
+        background: #1e1e1e;
+        color: #00ff88;
+        padding: 15px;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 13px;
+        min-height: 40px;
+        margin: 10px 0;
+        white-space: pre-wrap;
+      }
+      .btn {
+        padding: 10px 24px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        margin: 4px;
+      }
+      .btn-run {
+        background: #4caf50;
+        color: white;
+      }
+      .btn-run:hover {
+        background: #388e3c;
+      }
+      .btn-hint {
+        background: #ff9800;
+        color: white;
+      }
+      .btn-hint:hover {
+        background: #f57c00;
+      }
+      .btn-answer {
+        background: #9c27b0;
+        color: white;
+      }
+      .btn-answer:hover {
+        background: #7b1fa2;
+      }
+      .btn-reset {
+        background: #e0e0e0;
+        color: #333;
+      }
+      .btn-reset:hover {
+        background: #bdbdbd;
+      }
+      .btn-blue {
+        background: #1a73e8;
+        color: white;
+      }
+      .btn-blue:hover {
+        background: #1557b0;
+      }
+      .btn-blue.secondary {
+        background: white;
+        color: #1a73e8;
+        border: 2px solid #1a73e8;
+      }
+
+      .annotation {
+        background: #fff8e1;
+        border-left: 4px solid #ffb300;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border-radius: 0 8px 8px 0;
+        font-size: 14px;
+      }
+      .annotation strong {
+        color: #f57f17;
+      }
+      .concept-box {
+        background: #e8f5e9;
+        border-left: 4px solid #4caf50;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border-radius: 0 8px 8px 0;
+        font-size: 14px;
+      }
+      .concept-box strong {
+        color: #2e7d32;
+      }
+      .sa-compare {
+        background: #f3e5f5;
+        border-left: 4px solid #9c27b0;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border-radius: 0 8px 8px 0;
+        font-size: 14px;
+      }
+      .sa-compare strong {
+        color: #7b1fa2;
+      }
+      .warning-box {
+        background: #fce4ec;
+        border-left: 4px solid #e53935;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border-radius: 0 8px 8px 0;
+        font-size: 14px;
+      }
+      .warning-box strong {
+        color: #c62828;
+      }
+
+      .difficulty {
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-left: 10px;
+      }
+      .diff-easy {
+        background: #e8f5e9;
+        color: #2e7d32;
+      }
+      .diff-medium {
+        background: #fff3e0;
+        color: #e65100;
+      }
+      .diff-hard {
+        background: #fce4ec;
+        color: #c62828;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0;
+        font-size: 14px;
+      }
+      th,
+      td {
+        border: 1px solid #e0e0e0;
+        padding: 10px 12px;
+        text-align: left;
+      }
+      th {
+        background: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .test-result {
+        padding: 8px 12px;
+        border-radius: 6px;
+        margin: 4px 0;
+        font-family: monospace;
+        font-size: 13px;
+      }
+      .test-pass {
+        background: #e8f5e9;
+        color: #2e7d32;
+        border-left: 4px solid #4caf50;
+      }
+      .test-fail {
+        background: #fce4ec;
+        color: #c62828;
+        border-left: 4px solid #e53935;
+      }
+
+      .challenge-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .score-badge {
+        background: #1a73e8;
+        color: white;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .step {
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        background: #1a73e8;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 28px;
+        font-weight: bold;
+        font-size: 14px;
+        margin-right: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div style="margin-bottom: 15px">
+        <a href="../lesson-1/index.html" class="nav-link">← Lesson 2.1</a>
+        <span style="color: #999; font-size: 14px"
+          >Module 2 — Lesson 2: Code Challenges + POST Routes</span
+        >
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         SCOREBOARD
+         ══════════════════════════════════════════════ -->
+
+      <div
+        class="card"
+        style="
+          background: linear-gradient(135deg, #1a73e8, #4285f4);
+          color: white;
+          border: none;
+        "
+      >
+        <div class="challenge-header">
+          <div>
+            <h2 style="color: white; border: none; padding: 0; margin: 0">
+              🧩 Coding Challenges
+            </h2>
+            <p style="margin: 5px 0 0; opacity: 0.9">
+              Think. Write. Run. Learn.
+            </p>
+          </div>
+          <div
+            class="score-badge"
+            style="background: rgba(255, 255, 255, 0.2); font-size: 18px"
+          >
+            Score: <span id="totalScore">0</span> / 6
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         CHALLENGE 1: Array Filter
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>
+          Challenge 1: Filter Cheap Flights
+          <span class="difficulty diff-easy">Easy</span>
+        </h2>
+
+        <p>
+          <strong>Problem:</strong> Given an array of flights, write a function
+          that returns only the flights with a price
+          <strong>under a given budget</strong> AND that still have
+          <strong>seats available</strong> (seatsLeft > 0).
+        </p>
+
+        <div class="annotation">
+          <strong>📋 Requirements:</strong><br />
+          • Input: an array of flight objects, and a budget number<br />
+          • Output: a new array with only flights where
+          <code>price &lt; budget</code> AND <code>seatsLeft &gt; 0</code><br />
+          • If no flights match, return an empty array <code>[]</code>
+        </div>
+
+        <p><strong>Test cases:</strong></p>
+        <div class="code-block">
+          <span class="comment"
+            >// Test data (same flights from your server):</span
+          >
+          <span class="keyword">const</span> flights = [ { flightNumber:
+          <span class="string">"TG601"</span>, price:
+          <span class="number">12500</span>, seatsLeft:
+          <span class="number">23</span> }, { flightNumber:
+          <span class="string">"TG603"</span>, price:
+          <span class="number">18900</span>, seatsLeft:
+          <span class="number">5</span> }, { flightNumber:
+          <span class="string">"JL708"</span>, price:
+          <span class="number">15200</span>, seatsLeft:
+          <span class="number">0</span> },
+          <span class="comment">// sold out!</span> { flightNumber:
+          <span class="string">"TG659"</span>, price:
+          <span class="number">28500</span>, seatsLeft:
+          <span class="number">8</span> }, { flightNumber:
+          <span class="string">"SQ978"</span>, price:
+          <span class="number">6500</span>, seatsLeft:
+          <span class="number">45</span> }, ]; findCheapFlights(flights,
+          <span class="number">15000</span>) → [<span class="string"
+            >"TG601"</span
+          >, <span class="string">"SQ978"</span>]
+          <span class="comment"
+            >// TG601 (12500 < 15000, 23 seats ✅), SQ978 (6500 < 15000, 45
+            seats ✅)</span
+          >
+          <span class="comment"
+            >// JL708 excluded: 0 seats even though price is under budget</span
+          >
+
+          findCheapFlights(flights, <span class="number">5000</span>) → []
+          <span class="comment">// Nothing under 5000</span>
+
+          findCheapFlights(flights, <span class="number">50000</span>) → [<span
+            class="string"
+            >"TG601"</span
+          >, <span class="string">"TG603"</span>,
+          <span class="string">"TG659"</span>,
+          <span class="string">"SQ978"</span>]
+          <span class="comment">// All except JL708 (sold out)</span>
+        </div>
+
+        <p><strong>Your code:</strong> Complete the function below:</p>
+        <div class="code-editor">
+          <textarea id="challenge1" spellcheck="false">
+function findCheapFlights(flights, budget) {
+  // Your code here!
+  // Return an array of flight NUMBERS (strings) that match.
+  // Hint: you need a loop (or .filter) + a condition
+  
+}</textarea
+          >
+        </div>
+
+        <button class="btn btn-run" onclick="runChallenge1()">
+          ▶ Run Tests
+        </button>
+        <button class="btn btn-hint" onclick="showHint(1)">💡 Hint</button>
+        <button class="btn btn-answer" onclick="showAnswer(1)">
+          👀 Show Answer
+        </button>
+        <button class="btn btn-reset" onclick="resetChallenge(1)">
+          ↺ Reset
+        </button>
+
+        <div id="hint1" style="display: none" class="annotation">
+          <strong>💡 Hint:</strong><br />
+          1. Create an empty array for results: <code>const result = [];</code
+          ><br />
+          2. Loop through flights with <code>for...of</code><br />
+          3. Inside the loop, check TWO conditions with
+          <code>&amp;&amp;</code> (AND)<br />
+          4. If both conditions pass,
+          <code>result.push(flight.flightNumber)</code><br />
+          5. Return the result array
+        </div>
+
+        <div id="answer1" style="display: none" class="code-block">
+          <span class="comment"
+            >// Solution 1: Loop (clear and easy to read)</span
+          >
+          <span class="keyword">function</span>
+          <span class="function">findCheapFlights</span>(flights, budget) {
+          <span class="keyword">const</span> result = [];
+          <span class="keyword">for</span> (<span class="keyword">const</span>
+          flight <span class="keyword">of</span> flights) {
+          <span class="keyword">if</span> (flight.price < budget &&
+          flight.seatsLeft > <span class="number">0</span>) { result.<span
+            class="function"
+            >push</span
+          >(flight.flightNumber); } }
+          <span class="keyword">return</span> result; }
+
+          <span class="comment"
+            >// Solution 2: .filter() + .map() (shorter, more "developer"
+            style)</span
+          >
+          <span class="keyword">function</span>
+          <span class="function">findCheapFlights</span>(flights, budget) {
+          <span class="keyword">return</span> flights .<span class="function"
+            >filter</span
+          >(f => f.price < budget && f.seatsLeft >
+          <span class="number">0</span>) .<span class="function">map</span>(f =>
+          f.flightNumber); }
+        </div>
+
+        <div id="result1" style="margin-top: 10px"></div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         CHALLENGE 2: Find Best Flight
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>
+          Challenge 2: Find the Best Deal
+          <span class="difficulty diff-easy">Easy</span>
+        </h2>
+
+        <p>
+          <strong>Problem:</strong> Write a function that finds the
+          <strong>cheapest available flight</strong> between two airports. If no
+          flights are available, return <code>null</code>.
+        </p>
+
+        <div class="annotation">
+          <strong>📋 Requirements:</strong><br />
+          • Input: array of flights, origin string, dest string<br />
+          • Filter by: <code>origin</code>, <code>dest</code>, AND
+          <code>seatsLeft &gt; 0</code><br />
+          • Return: the full flight object with the lowest price, or
+          <code>null</code>
+        </div>
+
+        <div class="code-block">
+          <span class="comment">// Test cases:</span>
+          findBestDeal(flights, <span class="string">"BKK"</span>,
+          <span class="string">"NRT"</span>) → { flightNumber:
+          <span class="string">"TG601"</span>, price:
+          <span class="number">12500</span>, ... }
+          <span class="comment">// cheapest available BKK→NRT</span>
+
+          findBestDeal(flights, <span class="string">"NRT"</span>,
+          <span class="string">"SIN"</span>) → <span class="keyword">null</span>
+          <span class="comment">// no flights on this route</span>
+        </div>
+
+        <div class="code-editor">
+          <textarea id="challenge2" spellcheck="false">
+function findBestDeal(flights, origin, dest) {
+  // Your code here!
+  // 1. Filter flights by origin, dest, and seatsLeft > 0
+  // 2. Find the one with the lowest price
+  // 3. Return that flight object (or null if none found)
+  
+}</textarea
+          >
+        </div>
+
+        <button class="btn btn-run" onclick="runChallenge2()">
+          ▶ Run Tests
+        </button>
+        <button class="btn btn-hint" onclick="showHint(2)">💡 Hint</button>
+        <button class="btn btn-answer" onclick="showAnswer(2)">
+          👀 Show Answer
+        </button>
+        <button class="btn btn-reset" onclick="resetChallenge(2)">
+          ↺ Reset
+        </button>
+
+        <div id="hint2" style="display: none" class="annotation">
+          <strong>💡 Hint:</strong><br />
+          1. Start with <code>let cheapest = null;</code><br />
+          2. Loop through all flights<br />
+          3. Check if origin matches AND dest matches AND seatsLeft > 0<br />
+          4. If match: compare with current cheapest — if cheaper (or cheapest
+          is null), update it<br />
+          5. After loop, return cheapest
+        </div>
+
+        <div id="answer2" style="display: none" class="code-block">
+          <span class="keyword">function</span>
+          <span class="function">findBestDeal</span>(flights, origin, dest) {
+          <span class="keyword">let</span> cheapest =
+          <span class="keyword">null</span>;
+          <span class="keyword">for</span> (<span class="keyword">const</span>
+          flight <span class="keyword">of</span> flights) {
+          <span class="keyword">if</span> (flight.origin === origin &&
+          flight.dest === dest && flight.seatsLeft >
+          <span class="number">0</span>) {
+          <span class="keyword">if</span> (cheapest ===
+          <span class="keyword">null</span> || flight.price < cheapest.price) {
+          cheapest = flight; } } } <span class="keyword">return</span> cheapest;
+          }
+        </div>
+
+        <div id="result2" style="margin-top: 10px"></div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         CHALLENGE 3: Seat Availability Summary
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>
+          Challenge 3: Seat Availability Summary
+          <span class="difficulty diff-medium">Medium</span>
+        </h2>
+
+        <p>
+          <strong>Problem:</strong> Write a function that takes an array of seat
+          objects and returns a <strong>summary object</strong> counting how
+          many seats are available, held, and booked.
+        </p>
+
+        <div class="annotation">
+          <strong>📋 Requirements:</strong><br />
+          • Input: array of seat objects, each with
+          <code>{ seat: "1A", status: "available" }</code><br />
+          • Output: an object <code>{ available: X, held: X, booked: X }</code
+          ><br />
+          • Possible statuses: "available", "held", "booked"
+        </div>
+
+        <div class="code-block">
+          <span class="comment">// Test:</span>
+          <span class="keyword">const</span> seats = [ { seat:
+          <span class="string">"1A"</span>, status:
+          <span class="string">"available"</span> }, { seat:
+          <span class="string">"1B"</span>, status:
+          <span class="string">"booked"</span> }, { seat:
+          <span class="string">"1C"</span>, status:
+          <span class="string">"available"</span> }, { seat:
+          <span class="string">"2A"</span>, status:
+          <span class="string">"held"</span> }, { seat:
+          <span class="string">"2B"</span>, status:
+          <span class="string">"available"</span> }, { seat:
+          <span class="string">"2C"</span>, status:
+          <span class="string">"booked"</span> }, ]; seatSummary(seats) → {
+          available: <span class="number">3</span>, held:
+          <span class="number">1</span>, booked: <span class="number">2</span> }
+        </div>
+
+        <div class="code-editor">
+          <textarea id="challenge3" spellcheck="false">
+function seatSummary(seats) {
+  // Your code here!
+  // Count seats by status and return a summary object
+  
+}</textarea
+          >
+        </div>
+
+        <button class="btn btn-run" onclick="runChallenge3()">
+          ▶ Run Tests
+        </button>
+        <button class="btn btn-hint" onclick="showHint(3)">💡 Hint</button>
+        <button class="btn btn-answer" onclick="showAnswer(3)">
+          👀 Show Answer
+        </button>
+        <button class="btn btn-reset" onclick="resetChallenge(3)">
+          ↺ Reset
+        </button>
+
+        <div id="hint3" style="display: none" class="annotation">
+          <strong>💡 Hint:</strong><br />
+          1. Create a counter object:
+          <code>const summary = { available: 0, held: 0, booked: 0 };</code
+          ><br />
+          2. Loop through seats<br />
+          3. Check each seat's status with if/else if<br />
+          4. Increment the matching counter:
+          <code>summary.available++</code> (++ means "add 1")<br />
+          5. Return the summary object
+        </div>
+
+        <div id="answer3" style="display: none" class="code-block">
+          <span class="keyword">function</span>
+          <span class="function">seatSummary</span>(seats) {
+          <span class="keyword">const</span> summary = { available:
+          <span class="number">0</span>, held: <span class="number">0</span>,
+          booked: <span class="number">0</span> };
+          <span class="keyword">for</span> (<span class="keyword">const</span>
+          seat <span class="keyword">of</span> seats) {
+          <span class="keyword">if</span> (seat.status ===
+          <span class="string">"available"</span>) { summary.available++; }
+          <span class="keyword">else if</span> (seat.status ===
+          <span class="string">"held"</span>) { summary.held++; }
+          <span class="keyword">else if</span> (seat.status ===
+          <span class="string">"booked"</span>) { summary.booked++; } }
+          <span class="keyword">return</span> summary; }
+        </div>
+
+        <div id="result3" style="margin-top: 10px"></div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         CHALLENGE 4: Apply Promo Code
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>
+          Challenge 4: Apply Promo Code
+          <span class="difficulty diff-medium">Medium</span>
+        </h2>
+
+        <p>
+          <strong>Problem:</strong> Your flowchart has "POST
+          /api/promos/validate". Write a function that applies a promo code to a
+          price. Each promo has different rules.
+        </p>
+
+        <div class="annotation">
+          <strong>📋 Requirements:</strong><br />
+          • Input: original price (number), promo code (string)<br />
+          • Valid promos: <code>"SAVE10"</code> = 10% off,
+          <code>"FLAT500"</code> = ฿500 off, <code>"SUMMER20"</code> = 20%
+          off<br />
+          • If promo code is invalid, return
+          <code>{ valid: false, message: "Invalid promo code" }</code><br />
+          • If valid, return
+          <code>{ valid: true, originalPrice, discount, finalPrice }</code
+          ><br />
+          • Final price should <strong>never be negative</strong> (minimum ฿0)
+        </div>
+
+        <div class="code-block">
+          <span class="comment">// Test cases:</span>
+          applyPromo(<span class="number">12500</span>,
+          <span class="string">"SAVE10"</span>) → { valid:
+          <span class="keyword">true</span>, originalPrice:
+          <span class="number">12500</span>, discount:
+          <span class="number">1250</span>, finalPrice:
+          <span class="number">11250</span> } applyPromo(<span class="number"
+            >12500</span
+          >, <span class="string">"FLAT500"</span>) → { valid:
+          <span class="keyword">true</span>, originalPrice:
+          <span class="number">12500</span>, discount:
+          <span class="number">500</span>, finalPrice:
+          <span class="number">12000</span> } applyPromo(<span class="number"
+            >12500</span
+          >, <span class="string">"SUMMER20"</span>) → { valid:
+          <span class="keyword">true</span>, originalPrice:
+          <span class="number">12500</span>, discount:
+          <span class="number">2500</span>, finalPrice:
+          <span class="number">10000</span> } applyPromo(<span class="number"
+            >12500</span
+          >, <span class="string">"FAKE99"</span>) → { valid:
+          <span class="keyword">false</span>, message:
+          <span class="string">"Invalid promo code"</span> } applyPromo(<span
+            class="number"
+            >300</span
+          >, <span class="string">"FLAT500"</span>) → { valid:
+          <span class="keyword">true</span>, originalPrice:
+          <span class="number">300</span>, discount:
+          <span class="number">300</span>, finalPrice:
+          <span class="number">0</span> }
+          <span class="comment"
+            >// ↑ 300 - 500 = -200, but minimum is 0, so finalPrice = 0,
+            discount = 300</span
+          >
+        </div>
+
+        <div class="code-editor">
+          <textarea id="challenge4" spellcheck="false">
+function applyPromo(price, code) {
+  // Your code here!
+  // 1. Check which promo code was given
+  // 2. Calculate the discount
+  // 3. Make sure final price doesn't go below 0
+  // 4. Return the result object
+  
+}</textarea
+          >
+        </div>
+
+        <button class="btn btn-run" onclick="runChallenge4()">
+          ▶ Run Tests
+        </button>
+        <button class="btn btn-hint" onclick="showHint(4)">💡 Hint</button>
+        <button class="btn btn-answer" onclick="showAnswer(4)">
+          👀 Show Answer
+        </button>
+        <button class="btn btn-reset" onclick="resetChallenge(4)">
+          ↺ Reset
+        </button>
+
+        <div id="hint4" style="display: none" class="annotation">
+          <strong>💡 Hint:</strong><br />
+          1. Use <code>if/else if</code> to check the code string<br />
+          2. For "SAVE10": discount = <code>price * 0.10</code> (10%)<br />
+          3. For "FLAT500": discount = <code>500</code> (fixed amount)<br />
+          4. Use <code>Math.max(0, price - discount)</code> to prevent negative
+          prices<br />
+          5. The actual discount = <code>price - finalPrice</code> (in case it
+          was capped at 0)
+        </div>
+
+        <div id="answer4" style="display: none" class="code-block">
+          <span class="keyword">function</span>
+          <span class="function">applyPromo</span>(price, code) {
+          <span class="keyword">let</span> discount =
+          <span class="number">0</span>;
+
+          <span class="keyword">if</span> (code ===
+          <span class="string">"SAVE10"</span>) { discount = price *
+          <span class="number">0.10</span>; }
+          <span class="keyword">else if</span> (code ===
+          <span class="string">"FLAT500"</span>) { discount =
+          <span class="number">500</span>; }
+          <span class="keyword">else if</span> (code ===
+          <span class="string">"SUMMER20"</span>) { discount = price *
+          <span class="number">0.20</span>; }
+          <span class="keyword">else</span> {
+          <span class="keyword">return</span> { valid:
+          <span class="keyword">false</span>, message:
+          <span class="string">"Invalid promo code"</span> }; }
+
+          <span class="keyword">const</span> finalPrice = Math.<span
+            class="function"
+            >max</span
+          >(<span class="number">0</span>, price - discount);
+          <span class="keyword">const</span> actualDiscount = price -
+          finalPrice;
+
+          <span class="keyword">return</span> { valid:
+          <span class="keyword">true</span>, originalPrice: price, discount:
+          actualDiscount, finalPrice: finalPrice }; }
+        </div>
+
+        <div id="result4" style="margin-top: 10px"></div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         CHALLENGE 5: Build a Route Handler
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>
+          Challenge 5: Build an API Route Handler
+          <span class="difficulty diff-medium">Medium</span>
+        </h2>
+
+        <p>
+          <strong>Problem:</strong> This simulates writing a real Express route.
+          Given a <code>req</code> object (the request), write the logic that
+          would go inside <code>app.get("/api/flights", ...)</code>. Return the
+          correct response object.
+        </p>
+
+        <div class="annotation">
+          <strong>📋 Requirements:</strong><br />
+          • Input: <code>req</code> object with <code>req.query</code> (like
+          <code>{ origin: "BKK", dest: "NRT" }</code>)<br />
+          • If origin is missing → return
+          <code>{ status: 400, body: { error: "Missing origin" } }</code><br />
+          • If dest is missing → return
+          <code>{ status: 400, body: { error: "Missing dest" } }</code><br />
+          • If both present → filter flights and return
+          <code>{ status: 200, body: { count: X, flights: [...] } }</code>
+        </div>
+
+        <div class="code-editor">
+          <textarea id="challenge5" spellcheck="false">
+function handleFlightSearch(req, flights) {
+  // req.query contains the query parameters
+  // Example: req.query = { origin: "BKK", dest: "NRT" }
+  
+  // Your code here!
+  // 1. Extract origin and dest from req.query
+  // 2. Validate: if missing, return error with status 400
+  // 3. Filter flights by origin and dest
+  // 4. Return success with status 200
+  
+}</textarea
+          >
+        </div>
+
+        <button class="btn btn-run" onclick="runChallenge5()">
+          ▶ Run Tests
+        </button>
+        <button class="btn btn-hint" onclick="showHint(5)">💡 Hint</button>
+        <button class="btn btn-answer" onclick="showAnswer(5)">
+          👀 Show Answer
+        </button>
+        <button class="btn btn-reset" onclick="resetChallenge(5)">
+          ↺ Reset
+        </button>
+
+        <div id="hint5" style="display: none" class="annotation">
+          <strong>💡 Hint:</strong><br />
+          1. <code>const origin = req.query.origin;</code> (or destructure:
+          <code>const { origin, dest } = req.query;</code>)<br />
+          2. Check: <code>if (!origin)</code> → return
+          <code>{ status: 400, body: { error: "Missing origin" } }</code><br />
+          3. Filter:
+          <code
+            >flights.filter(f => f.origin === origin && f.dest === dest)</code
+          ><br />
+          4. Return:
+          <code
+            >{ status: 200, body: { count: results.length, flights: results }
+            }</code
+          >
+        </div>
+
+        <div id="answer5" style="display: none" class="code-block">
+          <span class="keyword">function</span>
+          <span class="function">handleFlightSearch</span>(req, flights) {
+          <span class="keyword">const</span> { origin, dest } = req.query;
+
+          <span class="keyword">if</span> (!origin) {
+          <span class="keyword">return</span> { status:
+          <span class="number">400</span>, body: { error:
+          <span class="string">"Missing origin"</span> } }; }
+          <span class="keyword">if</span> (!dest) {
+          <span class="keyword">return</span> { status:
+          <span class="number">400</span>, body: { error:
+          <span class="string">"Missing dest"</span> } }; }
+
+          <span class="keyword">const</span> results = flights.<span
+            class="function"
+            >filter</span
+          >( f => f.origin === origin && f.dest === dest );
+
+          <span class="keyword">return</span> { status:
+          <span class="number">200</span>, body: { count: results.length,
+          flights: results } }; }
+        </div>
+
+        <div id="result5" style="margin-top: 10px"></div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         CHALLENGE 6: Booking Price Calculator
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>
+          Challenge 6: Complete Booking Price Calculator
+          <span class="difficulty diff-hard">Hard</span>
+        </h2>
+
+        <p>
+          <strong>Problem:</strong> Build a function that calculates the total
+          booking price with add-ons and promo. This combines EVERYTHING you've
+          learned!
+        </p>
+
+        <div class="annotation">
+          <strong>📋 Requirements:</strong><br />
+          • Input: a booking object with flight price, passengers count, add-ons
+          array, and optional promo code<br />
+          • Add-on prices: <code>"baggage"</code> = ฿800, <code>"meal"</code> =
+          ฿350, <code>"insurance"</code> = ฿500<br />
+          • Add-ons are PER PASSENGER<br />
+          • Promo applies to the TOTAL (after add-ons). Same promos as Challenge
+          4.<br />
+          • Return:
+          <code
+            >{ basePrice, addOnsTotal, subtotal, discount, totalPrice, breakdown
+            }</code
+          >
+        </div>
+
+        <div class="code-block">
+          <span class="comment">// Test:</span>
+          calculateBooking({ flightPrice: <span class="number">12500</span>,
+          passengers: <span class="number">2</span>, addOns: [<span
+            class="string"
+            >"baggage"</span
+          >, <span class="string">"meal"</span>], promoCode:
+          <span class="string">"SAVE10"</span> }) → { basePrice:
+          <span class="number">25000</span>,
+          <span class="comment">// 12500 × 2 passengers</span> addOnsTotal:
+          <span class="number">2300</span>,
+          <span class="comment">// (800 + 350) × 2 passengers</span> subtotal:
+          <span class="number">27300</span>,
+          <span class="comment">// 25000 + 2300</span> discount:
+          <span class="number">2730</span>,
+          <span class="comment">// 10% of 27300</span> totalPrice:
+          <span class="number">24570</span>,
+          <span class="comment">// 27300 - 2730</span>
+          }
+        </div>
+
+        <div class="code-editor">
+          <textarea id="challenge6" spellcheck="false">
+function calculateBooking(booking) {
+  // This is the big one! Combine everything:
+  // Variables, conditions, loops, objects, functions
+  
+  // booking = { flightPrice, passengers, addOns, promoCode }
+  // addOns prices: baggage=800, meal=350, insurance=500
+  // promos: SAVE10=10%, FLAT500=500off, SUMMER20=20%
+
+  // Your code here!
+  
+}</textarea
+          >
+        </div>
+
+        <button class="btn btn-run" onclick="runChallenge6()">
+          ▶ Run Tests
+        </button>
+        <button class="btn btn-hint" onclick="showHint(6)">💡 Hint</button>
+        <button class="btn btn-answer" onclick="showAnswer(6)">
+          👀 Show Answer
+        </button>
+        <button class="btn btn-reset" onclick="resetChallenge(6)">
+          ↺ Reset
+        </button>
+
+        <div id="hint6" style="display: none" class="annotation">
+          <strong>💡 Hint (step by step):</strong><br />
+          1. <code>basePrice = flightPrice × passengers</code><br />
+          2. Create an add-on price map:
+          <code
+            >const addOnPrices = { baggage: 800, meal: 350, insurance: 500
+            };</code
+          ><br />
+          3. Loop through <code>booking.addOns</code>, sum up prices using the
+          map<br />
+          4. Multiply add-on sum by passengers<br />
+          5. <code>subtotal = basePrice + addOnsTotal</code><br />
+          6. Apply promo to subtotal (reuse your Challenge 4 logic!)<br />
+          7. Return the result object
+        </div>
+
+        <div id="answer6" style="display: none" class="code-block">
+          <span class="keyword">function</span>
+          <span class="function">calculateBooking</span>(booking) {
+          <span class="keyword">const</span> addOnPrices = { baggage:
+          <span class="number">800</span>, meal:
+          <span class="number">350</span>, insurance:
+          <span class="number">500</span> };
+
+          <span class="comment">// Step 1: Base price</span>
+          <span class="keyword">const</span> basePrice = booking.flightPrice *
+          booking.passengers;
+
+          <span class="comment">// Step 2: Calculate add-ons per person</span>
+          <span class="keyword">let</span> addOnPerPerson =
+          <span class="number">0</span>; <span class="keyword">for</span> (<span
+            class="keyword"
+            >const</span
+          >
+          addon <span class="keyword">of</span> booking.addOns) {
+          <span class="keyword">if</span> (addOnPrices[addon]) { addOnPerPerson
+          += addOnPrices[addon]; } }
+          <span class="keyword">const</span> addOnsTotal = addOnPerPerson *
+          booking.passengers;
+
+          <span class="comment">// Step 3: Subtotal</span>
+          <span class="keyword">const</span> subtotal = basePrice + addOnsTotal;
+
+          <span class="comment">// Step 4: Apply promo</span>
+          <span class="keyword">let</span> discount =
+          <span class="number">0</span>;
+          <span class="keyword">if</span> (booking.promoCode ===
+          <span class="string">"SAVE10"</span>) { discount = subtotal *
+          <span class="number">0.10</span>; }
+          <span class="keyword">else if</span> (booking.promoCode ===
+          <span class="string">"FLAT500"</span>) { discount =
+          <span class="number">500</span>; }
+          <span class="keyword">else if</span> (booking.promoCode ===
+          <span class="string">"SUMMER20"</span>) { discount = subtotal *
+          <span class="number">0.20</span>; }
+
+          <span class="keyword">const</span> totalPrice = Math.<span
+            class="function"
+            >max</span
+          >(<span class="number">0</span>, subtotal - discount); discount =
+          subtotal - totalPrice;
+
+          <span class="keyword">return</span> { basePrice, addOnsTotal,
+          subtotal, discount, totalPrice }; }
+        </div>
+
+        <div id="result6" style="margin-top: 10px"></div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         NEXT STEPS
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>🎯 How Did You Do?</h2>
+        <div id="finalScore" style="text-align: center; padding: 15px">
+          <p style="font-size: 18px">
+            Your score appears here as you complete challenges above.
+          </p>
+        </div>
+
+        <h3>What's Next?</h3>
+        <p>
+          After completing these challenges, reply <strong>"next"</strong> in
+          chat to continue with <strong>Module 3: REST API Design</strong> —
+          where you'll add POST routes to your server (hold seats, validate
+          promos, create bookings) and connect the frontend to the backend!
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // ============================================
+      // TEST DATA
+      // ============================================
+      const testFlights = [
+        {
+          id: 1,
+          flightNumber: "TG601",
+          origin: "BKK",
+          dest: "NRT",
+          departTime: "07:30",
+          arriveTime: "15:45",
+          price: 12500,
+          cabinClass: "Economy",
+          seatsLeft: 23,
+        },
+        {
+          id: 2,
+          flightNumber: "TG603",
+          origin: "BKK",
+          dest: "NRT",
+          departTime: "10:15",
+          arriveTime: "18:30",
+          price: 18900,
+          cabinClass: "Economy",
+          seatsLeft: 5,
+        },
+        {
+          id: 3,
+          flightNumber: "JL708",
+          origin: "BKK",
+          dest: "NRT",
+          departTime: "13:00",
+          arriveTime: "21:10",
+          price: 15200,
+          cabinClass: "Economy",
+          seatsLeft: 0,
+        },
+        {
+          id: 4,
+          flightNumber: "TG659",
+          origin: "BKK",
+          dest: "NRT",
+          departTime: "22:00",
+          arriveTime: "06:15",
+          price: 28500,
+          cabinClass: "Business",
+          seatsLeft: 8,
+        },
+        {
+          id: 5,
+          flightNumber: "NH848",
+          origin: "BKK",
+          dest: "HND",
+          departTime: "01:00",
+          arriveTime: "09:00",
+          price: 14200,
+          cabinClass: "Economy",
+          seatsLeft: 12,
+        },
+        {
+          id: 6,
+          flightNumber: "SQ978",
+          origin: "BKK",
+          dest: "SIN",
+          departTime: "08:45",
+          arriveTime: "12:15",
+          price: 6500,
+          cabinClass: "Economy",
+          seatsLeft: 45,
+        },
+      ];
+
+      let scores = {
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+        6: false,
+      };
+
+      function updateScore() {
+        const total = Object.values(scores).filter((v) => v).length;
+        document.getElementById("totalScore").textContent = total;
+      }
+
+      // ============================================
+      // HELPERS
+      // ============================================
+      function showHint(n) {
+        const el = document.getElementById("hint" + n);
+        el.style.display = el.style.display === "none" ? "block" : "none";
+      }
+      function showAnswer(n) {
+        const el = document.getElementById("answer" + n);
+        el.style.display = el.style.display === "none" ? "block" : "none";
+      }
+
+      const defaultCode = {};
+      document.querySelectorAll(".code-editor textarea").forEach((ta) => {
+        defaultCode[ta.id] = ta.value;
+      });
+
+      function resetChallenge(n) {
+        document.getElementById("challenge" + n).value =
+          defaultCode["challenge" + n];
+        document.getElementById("result" + n).innerHTML = "";
+      }
+
+      function testResult(pass, message) {
+        return (
+          '<div class="test-result ' +
+          (pass ? "test-pass" : "test-fail") +
+          '">' +
+          (pass ? "✅ PASS" : "❌ FAIL") +
+          ": " +
+          escapeHtml(message) +
+          "</div>"
+        );
+      }
+
+      function escapeHtml(t) {
+        const d = document.createElement("div");
+        d.textContent = t;
+        return d.innerHTML;
+      }
+
+      function arraysEqual(a, b) {
+        if (!Array.isArray(a) || !Array.isArray(b)) return false;
+        if (a.length !== b.length) return false;
+        return a.every((v, i) => v === b[i]);
+      }
+
+      // ============================================
+      // CHALLENGE RUNNERS
+      // ============================================
+
+      function runChallenge1() {
+        const code = document.getElementById("challenge1").value;
+        let html = "";
+        let allPass = true;
+
+        try {
+          const fn = new Function(
+            "flights",
+            "budget",
+            code + "\nreturn findCheapFlights(flights, budget);",
+          );
+
+          // Test 1
+          const r1 = fn(testFlights, 15000);
+          const e1 = ["TG601", "SQ978"];
+          const p1 = arraysEqual(r1, e1);
+          html += testResult(
+            p1,
+            "findCheapFlights(flights, 15000) → [" +
+              (r1 || []).join(", ") +
+              "] (expected: [" +
+              e1.join(", ") +
+              "])",
+          );
+          if (!p1) allPass = false;
+
+          // Test 2
+          const r2 = fn(testFlights, 5000);
+          const p2 = arraysEqual(r2, []);
+          html += testResult(
+            p2,
+            "findCheapFlights(flights, 5000) → [" +
+              (r2 || []).join(", ") +
+              "] (expected: [])",
+          );
+          if (!p2) allPass = false;
+
+          // Test 3
+          const r3 = fn(testFlights, 50000);
+          const e3 = ["TG601", "TG603", "TG659", "NH848", "SQ978"];
+          const p3 = arraysEqual(r3, e3);
+          html += testResult(
+            p3,
+            "findCheapFlights(flights, 50000) → [" +
+              (r3 || []).join(", ") +
+              "] (expected: [" +
+              e3.join(", ") +
+              "])",
+          );
+          if (!p3) allPass = false;
+        } catch (e) {
+          html += testResult(false, "Error: " + e.message);
+          allPass = false;
+        }
+
+        scores[1] = allPass;
+        updateScore();
+        document.getElementById("result1").innerHTML = html;
+      }
+
+      function runChallenge2() {
+        const code = document.getElementById("challenge2").value;
+        let html = "";
+        let allPass = true;
+
+        try {
+          const fn = new Function(
+            "flights",
+            "origin",
+            "dest",
+            code + "\nreturn findBestDeal(flights, origin, dest);",
+          );
+
+          const r1 = fn(testFlights, "BKK", "NRT");
+          const p1 = r1 && r1.flightNumber === "TG601" && r1.price === 12500;
+          html += testResult(
+            p1,
+            'findBestDeal(flights, "BKK", "NRT") → ' +
+              (r1 ? r1.flightNumber + " ฿" + r1.price : String(r1)) +
+              " (expected: TG601 ฿12500)",
+          );
+          if (!p1) allPass = false;
+
+          const r2 = fn(testFlights, "NRT", "SIN");
+          const p2 = r2 === null;
+          html += testResult(
+            p2,
+            'findBestDeal(flights, "NRT", "SIN") → ' +
+              String(r2) +
+              " (expected: null)",
+          );
+          if (!p2) allPass = false;
+
+          const r3 = fn(testFlights, "BKK", "SIN");
+          const p3 = r3 && r3.flightNumber === "SQ978" && r3.price === 6500;
+          html += testResult(
+            p3,
+            'findBestDeal(flights, "BKK", "SIN") → ' +
+              (r3 ? r3.flightNumber + " ฿" + r3.price : String(r3)) +
+              " (expected: SQ978 ฿6500)",
+          );
+          if (!p3) allPass = false;
+        } catch (e) {
+          html += testResult(false, "Error: " + e.message);
+          allPass = false;
+        }
+
+        scores[2] = allPass;
+        updateScore();
+        document.getElementById("result2").innerHTML = html;
+      }
+
+      function runChallenge3() {
+        const code = document.getElementById("challenge3").value;
+        let html = "";
+        let allPass = true;
+        const seats = [
+          { seat: "1A", status: "available" },
+          { seat: "1B", status: "booked" },
+          { seat: "1C", status: "available" },
+          { seat: "2A", status: "held" },
+          { seat: "2B", status: "available" },
+          { seat: "2C", status: "booked" },
+        ];
+
+        try {
+          const fn = new Function(
+            "seats",
+            code + "\nreturn seatSummary(seats);",
+          );
+
+          const r1 = fn(seats);
+          const p1 =
+            r1 && r1.available === 3 && r1.held === 1 && r1.booked === 2;
+          html += testResult(
+            p1,
+            "seatSummary(seats) → " +
+              JSON.stringify(r1) +
+              ' (expected: {"available":3,"held":1,"booked":2})',
+          );
+          if (!p1) allPass = false;
+
+          const r2 = fn([]);
+          const p2 =
+            r2 && r2.available === 0 && r2.held === 0 && r2.booked === 0;
+          html += testResult(
+            p2,
+            "seatSummary([]) → " +
+              JSON.stringify(r2) +
+              " (expected: all zeros)",
+          );
+          if (!p2) allPass = false;
+        } catch (e) {
+          html += testResult(false, "Error: " + e.message);
+          allPass = false;
+        }
+
+        scores[3] = allPass;
+        updateScore();
+        document.getElementById("result3").innerHTML = html;
+      }
+
+      function runChallenge4() {
+        const code = document.getElementById("challenge4").value;
+        let html = "";
+        let allPass = true;
+
+        try {
+          const fn = new Function(
+            "price",
+            "code",
+            code + "\nreturn applyPromo(price, code);",
+          );
+
+          const r1 = fn(12500, "SAVE10");
+          const p1 =
+            r1 &&
+            r1.valid === true &&
+            r1.discount === 1250 &&
+            r1.finalPrice === 11250;
+          html += testResult(
+            p1,
+            'applyPromo(12500, "SAVE10") → discount:' +
+              (r1 && r1.discount) +
+              " final:" +
+              (r1 && r1.finalPrice) +
+              " (expected: 1250, 11250)",
+          );
+          if (!p1) allPass = false;
+
+          const r2 = fn(12500, "FLAT500");
+          const p2 =
+            r2 &&
+            r2.valid === true &&
+            r2.discount === 500 &&
+            r2.finalPrice === 12000;
+          html += testResult(
+            p2,
+            'applyPromo(12500, "FLAT500") → discount:' +
+              (r2 && r2.discount) +
+              " final:" +
+              (r2 && r2.finalPrice) +
+              " (expected: 500, 12000)",
+          );
+          if (!p2) allPass = false;
+
+          const r3 = fn(12500, "FAKE99");
+          const p3 = r3 && r3.valid === false;
+          html += testResult(
+            p3,
+            'applyPromo(12500, "FAKE99") → valid:' +
+              (r3 && r3.valid) +
+              " (expected: false)",
+          );
+          if (!p3) allPass = false;
+
+          const r4 = fn(300, "FLAT500");
+          const p4 =
+            r4 &&
+            r4.valid === true &&
+            r4.finalPrice === 0 &&
+            r4.discount === 300;
+          html += testResult(
+            p4,
+            'applyPromo(300, "FLAT500") → final:' +
+              (r4 && r4.finalPrice) +
+              " discount:" +
+              (r4 && r4.discount) +
+              " (expected: 0, 300 — no negative!)",
+          );
+          if (!p4) allPass = false;
+        } catch (e) {
+          html += testResult(false, "Error: " + e.message);
+          allPass = false;
+        }
+
+        scores[4] = allPass;
+        updateScore();
+        document.getElementById("result4").innerHTML = html;
+      }
+
+      function runChallenge5() {
+        const code = document.getElementById("challenge5").value;
+        let html = "";
+        let allPass = true;
+
+        try {
+          const fn = new Function(
+            "req",
+            "flights",
+            code + "\nreturn handleFlightSearch(req, flights);",
+          );
+
+          // Test: missing origin
+          const r1 = fn({ query: { dest: "NRT" } }, testFlights);
+          const p1 = r1 && r1.status === 400 && r1.body && r1.body.error;
+          html += testResult(
+            p1,
+            "Missing origin → status:" + (r1 && r1.status) + " (expected: 400)",
+          );
+          if (!p1) allPass = false;
+
+          // Test: missing dest
+          const r2 = fn({ query: { origin: "BKK" } }, testFlights);
+          const p2 = r2 && r2.status === 400 && r2.body && r2.body.error;
+          html += testResult(
+            p2,
+            "Missing dest → status:" + (r2 && r2.status) + " (expected: 400)",
+          );
+          if (!p2) allPass = false;
+
+          // Test: valid search
+          const r3 = fn({ query: { origin: "BKK", dest: "NRT" } }, testFlights);
+          const p3 = r3 && r3.status === 200 && r3.body && r3.body.count === 4;
+          html += testResult(
+            p3,
+            "BKK→NRT → status:" +
+              (r3 && r3.status) +
+              " count:" +
+              (r3 && r3.body && r3.body.count) +
+              " (expected: 200, count 4)",
+          );
+          if (!p3) allPass = false;
+
+          // Test: no results
+          const r4 = fn({ query: { origin: "NRT", dest: "SIN" } }, testFlights);
+          const p4 = r4 && r4.status === 200 && r4.body && r4.body.count === 0;
+          html += testResult(
+            p4,
+            "NRT→SIN → count:" +
+              (r4 && r4.body && r4.body.count) +
+              " (expected: 0)",
+          );
+          if (!p4) allPass = false;
+        } catch (e) {
+          html += testResult(false, "Error: " + e.message);
+          allPass = false;
+        }
+
+        scores[5] = allPass;
+        updateScore();
+        document.getElementById("result5").innerHTML = html;
+      }
+
+      function runChallenge6() {
+        const code = document.getElementById("challenge6").value;
+        let html = "";
+        let allPass = true;
+
+        try {
+          const fn = new Function(
+            "booking",
+            code + "\nreturn calculateBooking(booking);",
+          );
+
+          const r1 = fn({
+            flightPrice: 12500,
+            passengers: 2,
+            addOns: ["baggage", "meal"],
+            promoCode: "SAVE10",
+          });
+          const p1 =
+            r1 &&
+            r1.basePrice === 25000 &&
+            r1.addOnsTotal === 2300 &&
+            r1.subtotal === 27300 &&
+            r1.discount === 2730 &&
+            r1.totalPrice === 24570;
+          html += testResult(
+            p1,
+            "2 pax, baggage+meal, SAVE10 → total:" +
+              (r1 && r1.totalPrice) +
+              " (expected: 24570)",
+          );
+          if (!p1) allPass = false;
+
+          const r2 = fn({
+            flightPrice: 6500,
+            passengers: 1,
+            addOns: [],
+            promoCode: null,
+          });
+          const p2 =
+            r2 &&
+            r2.basePrice === 6500 &&
+            r2.addOnsTotal === 0 &&
+            r2.totalPrice === 6500 &&
+            r2.discount === 0;
+          html += testResult(
+            p2,
+            "1 pax, no add-ons, no promo → total:" +
+              (r2 && r2.totalPrice) +
+              " (expected: 6500)",
+          );
+          if (!p2) allPass = false;
+
+          const r3 = fn({
+            flightPrice: 12500,
+            passengers: 3,
+            addOns: ["insurance"],
+            promoCode: "FLAT500",
+          });
+          const p3a =
+            r3 &&
+            r3.basePrice === 37500 &&
+            r3.addOnsTotal === 1500 &&
+            r3.subtotal === 39000;
+          const p3 = p3a && r3.discount === 500 && r3.totalPrice === 38500;
+          html += testResult(
+            p3,
+            "3 pax, insurance, FLAT500 → total:" +
+              (r3 && r3.totalPrice) +
+              " (expected: 38500)",
+          );
+          if (!p3) allPass = false;
+        } catch (e) {
+          html += testResult(false, "Error: " + e.message);
+          allPass = false;
+        }
+
+        scores[6] = allPass;
+        updateScore();
+        document.getElementById("result6").innerHTML = html;
+      }
+    </script>
+  </body>
+</html>

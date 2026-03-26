@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Module 2 — Lesson 1: Your First Server</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 750px;
+        margin: 0 auto;
+      }
+      .card {
+        background: white;
+        padding: 25px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+      .card h2 {
+        color: #1a73e8;
+        margin-top: 0;
+        font-size: 20px;
+        border-bottom: 2px solid #e8f0fe;
+        padding-bottom: 10px;
+      }
+      .card h3 {
+        color: #333;
+        font-size: 16px;
+        margin-top: 25px;
+      }
+      .nav-link {
+        display: inline-block;
+        margin: 10px 5px;
+        padding: 8px 16px;
+        background: #e8f0fe;
+        color: #1a73e8;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 14px;
+      }
+      .nav-link:hover {
+        background: #1a73e8;
+        color: white;
+      }
+      .code-block {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 18px;
+        border-radius: 8px;
+        font-family: "Consolas", monospace;
+        font-size: 13px;
+        margin: 12px 0;
+        overflow-x: auto;
+        line-height: 1.7;
+      }
+      .code-block .keyword {
+        color: #569cd6;
+      }
+      .code-block .string {
+        color: #ce9178;
+      }
+      .code-block .comment {
+        color: #6a9955;
+      }
+      .code-block .function {
+        color: #dcdcaa;
+      }
+      .code-block .number {
+        color: #b5cea8;
+      }
+      .annotation {
+        background: #fff8e1;
+        border-left: 4px solid #ffb300;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border-radius: 0 8px 8px 0;
+        font-size: 14px;
+      }
+      .annotation strong {
+        color: #f57f17;
+      }
+      .concept-box {
+        background: #e8f5e9;
+        border-left: 4px solid #4caf50;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border-radius: 0 8px 8px 0;
+        font-size: 14px;
+      }
+      .concept-box strong {
+        color: #2e7d32;
+      }
+      .sa-compare {
+        background: #f3e5f5;
+        border-left: 4px solid #9c27b0;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border-radius: 0 8px 8px 0;
+        font-size: 14px;
+      }
+      .sa-compare strong {
+        color: #7b1fa2;
+      }
+      .warning-box {
+        background: #fce4ec;
+        border-left: 4px solid #e53935;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border-radius: 0 8px 8px 0;
+        font-size: 14px;
+      }
+      .warning-box strong {
+        color: #c62828;
+      }
+      .terminal {
+        background: #0c0c0c;
+        color: #00ff88;
+        padding: 18px;
+        border-radius: 8px;
+        font-family: "Consolas", monospace;
+        font-size: 13px;
+        margin: 12px 0;
+        line-height: 1.7;
+      }
+      .terminal .prompt {
+        color: #888;
+      }
+      .terminal .cmd {
+        color: #fff;
+      }
+      .terminal .output {
+        color: #00ff88;
+      }
+      .terminal .error-text {
+        color: #ff5252;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0;
+        font-size: 14px;
+      }
+      th,
+      td {
+        border: 1px solid #e0e0e0;
+        padding: 10px 12px;
+        text-align: left;
+      }
+      th {
+        background: #e8f0fe;
+        color: #1a73e8;
+      }
+      .step {
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        background: #1a73e8;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 28px;
+        font-weight: bold;
+        font-size: 14px;
+        margin-right: 8px;
+      }
+      .diagram {
+        font-family: monospace;
+        background: #f5f5f5;
+        padding: 18px;
+        border-radius: 8px;
+        margin: 12px 0;
+        line-height: 1.8;
+        font-size: 13px;
+        overflow-x: auto;
+        white-space: pre;
+      }
+      .play-btn {
+        padding: 10px 24px;
+        background: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        margin: 4px;
+      }
+      .play-btn:hover {
+        background: #1557b0;
+      }
+      .play-btn.secondary {
+        background: white;
+        color: #1a73e8;
+        border: 2px solid #1a73e8;
+      }
+      .play-btn.secondary:hover {
+        background: #e8f0fe;
+      }
+      .output-box {
+        background: #1e1e1e;
+        color: #00ff88;
+        padding: 15px;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 13px;
+        min-height: 40px;
+        margin: 10px 0;
+        white-space: pre-wrap;
+      }
+      .badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+      .badge-get {
+        background: #e3f2fd;
+        color: #1565c0;
+      }
+      .badge-post {
+        background: #e8f5e9;
+        color: #2e7d32;
+      }
+      .badge-status {
+        background: #fff3e0;
+        color: #e65100;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Navigation -->
+      <div style="margin-bottom: 15px">
+        <a href="../../module-1/lesson-3/index.html" class="nav-link"
+          >← Module 1</a
+        >
+        <span style="color: #999; font-size: 14px"
+          >Module 2 — Lesson 1: Your First Server</span
+        >
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         INTRO: CLIENT VS SERVER
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>🖥️ Module 2: Backend Basics — What is a Server?</h2>
+
+        <p>
+          In Module 1, you built <strong>the client</strong> (what runs in the
+          browser). Now we build <strong>the server</strong> (what runs on a
+          computer somewhere, processing logic).
+        </p>
+
+        <div class="diagram">
+          ┌────────────────┐ ┌─────────────────┐ │ 🧑 Browser │ request │ 🖥️
+          Server │ │ (Client) │ ──────────→ │ (Node.js) │ │ │ │ │ │ Module 1
+          code │ response │ Module 2 code │ │ (HTML/CSS/JS) │ ←────────── │
+          (server.js) │ └────────────────┘ └────────┬─────────┘ │ ┌────▼─────┐ │
+          💾 Database│ │ (Module 4) │ └──────────┘
+        </div>
+
+        <div class="sa-compare">
+          <strong>🔄 SA perspective:</strong> You already know this
+          architecture! In your system design documents, you draw "Frontend" →
+          "Backend" → "Database". That's exactly what we're building. The server
+          is the "Application Layer" in your architecture diagram.
+        </div>
+
+        <h3>Why Do We Need a Server?</h3>
+        <table>
+          <tr>
+            <th>Without Server (Module 1)</th>
+            <th>With Server (Module 2)</th>
+          </tr>
+          <tr>
+            <td>Flight data is hardcoded in HTML</td>
+            <td>Flight data comes from the server/database</td>
+          </tr>
+          <tr>
+            <td>Every user sees the same fake data</td>
+            <td>Data is real-time (seats update as people book)</td>
+          </tr>
+          <tr>
+            <td>Can't save bookings</td>
+            <td>Bookings saved in database</td>
+          </tr>
+          <tr>
+            <td>No security (anyone can see your code)</td>
+            <td>Secret logic hidden on server</td>
+          </tr>
+          <tr>
+            <td>Can't process payments</td>
+            <td>Server handles payment securely</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         PART A: HOW HTTP WORKS
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>📡 Part A: How Client & Server Communicate (HTTP)</h2>
+
+        <p>
+          The browser and server talk using <strong>HTTP</strong> (HyperText
+          Transfer Protocol). It's like a conversation with strict rules:
+        </p>
+
+        <div class="diagram">
+          STEP 1: Client sends a REQUEST ─────────────────────────────────────
+          GET /api/flights?origin=BKK&dest=NRT HTTP/1.1 Host: localhost:3000 →
+          "Hey server, I want flights from BKK to NRT" STEP 2: Server processes
+          the request ───────────────────────────────────── - Read origin=BKK,
+          dest=NRT - Search the database - Find 4 matches STEP 3: Server sends a
+          RESPONSE ───────────────────────────────────── HTTP/1.1 200 OK
+          Content-Type: application/json { "count": 4, "flights": [ {
+          "flightNumber": "TG601", "price": 12500 }, ... ] } → "Here are 4
+          flights, as JSON data"
+        </div>
+
+        <h3>HTTP Status Codes — The Server's Vocabulary</h3>
+        <p>
+          The server responds with a number that tells the client what happened:
+        </p>
+
+        <table>
+          <tr>
+            <th>Code</th>
+            <th>Meaning</th>
+            <th>When Used</th>
+            <th>Flowchart Example</th>
+          </tr>
+          <tr>
+            <td><span class="badge badge-status">200</span></td>
+            <td>OK — Success!</td>
+            <td>Everything worked</td>
+            <td>Flights found, booking confirmed</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-status">201</span></td>
+            <td>Created</td>
+            <td>New resource created</td>
+            <td>Seat held, booking created</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-status">400</span></td>
+            <td>Bad Request</td>
+            <td>Client sent invalid data</td>
+            <td>"Inputs valid?" → No</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-status">404</span></td>
+            <td>Not Found</td>
+            <td>Resource doesn't exist</td>
+            <td>Flight ID doesn't exist</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-status">429</span></td>
+            <td>Too Many Requests</td>
+            <td>Rate limited</td>
+            <td>Your flowchart: "Rate limited?" → {"error":"429"}</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-status">500</span></td>
+            <td>Internal Server Error</td>
+            <td>Server crashed</td>
+            <td>Something broke on our side</td>
+          </tr>
+        </table>
+
+        <div class="annotation">
+          <strong>📖 Reading status codes:</strong><br />
+          • <strong>2xx</strong> = Success (everything is fine) ✅<br />
+          • <strong>4xx</strong> = Client error (YOU sent something wrong) ❌<br />
+          • <strong>5xx</strong> = Server error (WE broke something) 💥
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         PART B: READING server.js
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>📖 Part B: Reading server.js — Line by Line</h2>
+
+        <p>
+          Let's read the server code the same way we learned in Module 1. Open
+          <code>module-2/server.js</code> in VS Code and follow along.
+        </p>
+
+        <h3><span class="step">1</span> Import & Setup</h3>
+
+        <div class="code-block">
+          <span class="keyword">const</span> express =
+          <span class="function">require</span>(<span class="string"
+            >"express"</span
+          >); <span class="comment">// Load the Express library</span>
+          <span class="keyword">const</span> app =
+          <span class="function">express</span>();
+          <span class="comment">// Create a new server app</span> app.<span
+            class="function"
+            >use</span
+          >(express.<span class="function">json</span>());
+          <span class="comment">// Enable reading JSON from requests</span>
+        </div>
+
+        <div class="annotation">
+          <strong>📖 Reading these lines:</strong><br />
+          <code>require("express")</code> = "Go get the Express library from
+          node_modules"<br />
+          <code>express()</code> = "Create a new server application"<br />
+          <code>app.use()</code> = "Add this feature/plugin to my server"<br /><br />
+          <strong>SA perspective:</strong> This is like your "System
+          Initialization" section in a design doc.
+        </div>
+
+        <h3><span class="step">2</span> Define a Route (API Endpoint)</h3>
+
+        <div class="code-block">
+          <span class="comment">// Pattern: app.METHOD(PATH, HANDLER)</span>
+
+          app.<span class="function">get</span>(<span class="string"
+            >"/api/flights"</span
+          >, (req, res) => {
+          <span class="comment"
+            >// req = the incoming request (what client sent)</span
+          >
+          <span class="comment"
+            >// res = the response object (what we send back)</span
+          >
+
+          <span class="keyword">const</span> { origin, dest } = req.query;
+          <span class="comment">// Read ?origin=BKK&dest=NRT</span>
+
+          <span class="comment"
+            >// Filter flights array (same as Module 1!)</span
+          >
+          <span class="keyword">const</span> results = flights.<span
+            class="function"
+            >filter</span
+          >( flight => flight.origin === origin && flight.dest === dest );
+          res.<span class="function">json</span>({ count: results.length,
+          flights: results }); <span class="comment">// Send JSON back</span>
+          });
+        </div>
+
+        <div class="concept-box">
+          <strong>💡 Core Concept — Route = Flowchart Arrow:</strong
+          ><br /><br />
+          Every arrow in your flowchart that says <code>GET /api/...</code> or
+          <code>POST /api/...</code> becomes ONE route in your server code:<br /><br />
+          <code>app.get("/api/flights", ...)</code> → handles the search<br />
+          <code>app.post("/api/seats/hold", ...)</code> → holds a seat (Module
+          3)<br />
+          <code>app.post("/api/promos/validate", ...)</code> → checks promo code
+          (Module 7)<br />
+          <code>app.post("/api/bookings/confirm", ...)</code> → confirms booking
+          (Module 7)
+        </div>
+
+        <h3>
+          <span class="step">3</span> New Syntax: Arrow Functions &
+          Destructuring
+        </h3>
+
+        <div class="code-block">
+          <span class="comment"
+            >// ARROW FUNCTION: shorter way to write a function</span
+          >
+          <span class="comment">// These two are THE SAME:</span>
+
+          <span class="comment">// Old way (Module 1):</span>
+          <span class="keyword">function</span>
+          <span class="function">search</span>(req, res) { ... }
+
+          <span class="comment">// New way (arrow function):</span>
+          <span class="keyword">const</span>
+          <span class="function">search</span> = (req, res) => { ... }
+
+          <span class="comment"
+            >// Even shorter (used directly in app.get):</span
+          >
+          app.<span class="function">get</span>(<span class="string"
+            >"/api/flights"</span
+          >, (req, res) => { ... })
+        </div>
+
+        <div class="code-block">
+          <span class="comment"
+            >// DESTRUCTURING: shortcut to extract object properties</span
+          >
+          <span class="comment">// These two are THE SAME:</span>
+
+          <span class="comment">// Old way:</span>
+          <span class="keyword">const</span> origin = req.query.origin;
+          <span class="keyword">const</span> dest = req.query.dest;
+
+          <span class="comment">// New way (destructuring):</span>
+          <span class="keyword">const</span> { origin, dest } = req.query;
+
+          <span class="comment"
+            >// It "unpacks" the object into separate variables.</span
+          >
+          <span class="comment"
+            >// Think of it as: "Take origin and dest OUT OF req.query"</span
+          >
+        </div>
+
+        <div class="code-block">
+          <span class="comment"
+            >// .filter() — Array method that works like a loop + if</span
+          >
+          <span class="comment">// These two are THE SAME:</span>
+
+          <span class="comment">// Module 1 way:</span>
+          <span class="keyword">const</span> results = [];
+          <span class="keyword">for</span> (<span class="keyword">const</span>
+          flight <span class="keyword">of</span> flights) {
+          <span class="keyword">if</span> (flight.origin === origin &&
+          flight.dest === dest) { results.<span class="function">push</span
+          >(flight); } }
+
+          <span class="comment">// Module 2 way (shorter, same result):</span>
+          <span class="keyword">const</span> results = flights.<span
+            class="function"
+            >filter</span
+          >( flight => flight.origin === origin && flight.dest === dest );
+        </div>
+
+        <div class="annotation">
+          <strong>📖 Reading <code>.filter()</code>:</strong><br />
+          "Go through each flight. <strong>Keep</strong> only the ones where the
+          condition is <strong>true</strong>."<br />
+          It's the same loop+if pattern from Module 1, just written in one line.
+        </div>
+
+        <h3><span class="step">4</span> Start the Server</h3>
+
+        <div class="code-block">
+          <span class="keyword">const</span> PORT =
+          <span class="number">3000</span>; app.<span class="function"
+            >listen</span
+          >(PORT, () => { console.<span class="function">log</span>(<span
+            class="string"
+            >`Server running at http://localhost:${PORT}`</span
+          >); });
+        </div>
+
+        <div class="annotation">
+          <strong>📖 Reading this:</strong><br />
+          <code>app.listen(3000)</code> = "Start listening for requests on port
+          3000"<br /><br />
+          A <strong>port</strong> = a "door number" on your computer.<br />
+          Port 3000 means the server answers at
+          <code>http://localhost:3000</code><br />
+          Like a restaurant — the building is your computer, port 3000 is the
+          entrance door.
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         PART C: SETUP GUIDE
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>🚀 Part C: Run Your First Server!</h2>
+
+        <p>Follow these exact steps in your VS Code terminal:</p>
+
+        <h3>
+          <span class="step">1</span> Install Node.js (if not already installed)
+        </h3>
+        <p>Check if you have Node.js:</p>
+        <div class="terminal">
+          <span class="prompt">PS&gt;</span>
+          <span class="cmd">node --version</span>
+          <span class="output">v20.x.x</span> ← If you see a version number,
+          you're good!
+
+          <span class="prompt">PS&gt;</span>
+          <span class="cmd">npm --version</span>
+          <span class="output">10.x.x</span> ← npm comes with Node.js
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ If you don't have Node.js:</strong><br />
+          Download from <code>https://nodejs.org</code> → Choose "LTS" version →
+          Install → Restart VS Code
+        </div>
+
+        <h3><span class="step">2</span> Navigate to module-2 folder</h3>
+        <div class="terminal">
+          <span class="prompt">PS&gt;</span>
+          <span class="cmd">cd module-2</span>
+        </div>
+
+        <h3><span class="step">3</span> Install dependencies</h3>
+        <div class="terminal">
+          <span class="prompt">PS&gt;</span>
+          <span class="cmd">npm install express</span>
+          <span class="output">added 65 packages in 3s</span>
+        </div>
+
+        <div class="annotation">
+          <strong>📖 What just happened?</strong><br />
+          <code>npm install express</code> = "Download the Express library into
+          a folder called <code>node_modules</code>"<br />
+          <code>npm</code> = Node Package Manager (like an app store for code
+          libraries)<br />
+          <code>express</code> = the library name (there are 2+ million packages
+          on npm!)
+        </div>
+
+        <h3><span class="step">4</span> Start the server</h3>
+        <div class="terminal">
+          <span class="prompt">PS&gt;</span> <span class="cmd">npm start</span>
+
+          <span class="output"
+            >╔═══════════════════════════════════════════════════╗</span
+          >
+          <span class="output"
+            >║ ✈️ Flight Booking API — Server Started! ║</span
+          >
+          <span class="output"
+            >╠═══════════════════════════════════════════════════╣</span
+          >
+          <span class="output">║ 🌐 URL: http://localhost:3000 ║</span>
+          <span class="output">║ ║</span>
+          <span class="output">║ Try these in your browser: ║</span>
+          <span class="output"
+            >║ → http://localhost:3000/api/flights?origin=BKK&dest=NRT ║</span
+          >
+          <span class="output">║ → http://localhost:3000/api/flights/1 ║</span>
+          <span class="output">║ → http://localhost:3000/api/airports ║</span>
+          <span class="output"
+            >╚═══════════════════════════════════════════════════╝</span
+          >
+        </div>
+
+        <h3><span class="step">5</span> Test in your browser!</h3>
+        <p>Open these URLs one by one in Chrome and see the JSON response:</p>
+
+        <table>
+          <tr>
+            <th>URL to try</th>
+            <th>What it does</th>
+            <th>Flowchart step</th>
+          </tr>
+          <tr>
+            <td><code>http://localhost:3000</code></td>
+            <td>Welcome page — confirms server is running</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>
+              <code>http://localhost:3000/api/flights?origin=BKK&dest=NRT</code>
+            </td>
+            <td>Search flights BKK → NRT (should return 4)</td>
+            <td>GET /api/flights</td>
+          </tr>
+          <tr>
+            <td>
+              <code>http://localhost:3000/api/flights?origin=BKK&dest=SIN</code>
+            </td>
+            <td>Search flights BKK → SIN (should return 1)</td>
+            <td>GET /api/flights</td>
+          </tr>
+          <tr>
+            <td><code>http://localhost:3000/api/flights?origin=BKK</code></td>
+            <td>Missing dest — should return 400 error!</td>
+            <td>"Inputs valid?" → No</td>
+          </tr>
+          <tr>
+            <td><code>http://localhost:3000/api/flights/1</code></td>
+            <td>Get flight TG601 by ID</td>
+            <td>"Passenger selected flight"</td>
+          </tr>
+          <tr>
+            <td><code>http://localhost:3000/api/flights/99</code></td>
+            <td>Flight doesn't exist — should return 404!</td>
+            <td>Not found</td>
+          </tr>
+          <tr>
+            <td><code>http://localhost:3000/api/airports</code></td>
+            <td>List all valid airport codes</td>
+            <td>For validation dropdown</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         PART D: LIVE API TESTER
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>🧪 Part D: Live API Tester</h2>
+        <p>
+          Once your server is running, use these buttons to test it directly
+          from this page! <br /><small
+            >(Make sure <code>npm start</code> is running in terminal
+            first)</small
+          >
+        </p>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0">
+          <button
+            class="play-btn"
+            onclick="testApi('/api/flights?origin=BKK&dest=NRT')"
+          >
+            Search BKK→NRT
+          </button>
+          <button
+            class="play-btn"
+            onclick="testApi('/api/flights?origin=BKK&dest=SIN')"
+          >
+            Search BKK→SIN
+          </button>
+          <button class="play-btn" onclick="testApi('/api/flights?origin=BKK')">
+            Missing dest (400)
+          </button>
+          <button
+            class="play-btn"
+            onclick="testApi('/api/flights?origin=ZZZ&dest=NRT')"
+          >
+            Invalid airport (400)
+          </button>
+          <button class="play-btn" onclick="testApi('/api/flights/1')">
+            Flight #1
+          </button>
+          <button class="play-btn" onclick="testApi('/api/flights/99')">
+            Flight #99 (404)
+          </button>
+          <button class="play-btn" onclick="testApi('/api/airports')">
+            Airport list
+          </button>
+          <button class="play-btn" onclick="testApi('/api/health')">
+            Health check
+          </button>
+          <button class="play-btn secondary" onclick="clearApiOutput()">
+            Clear
+          </button>
+        </div>
+
+        <div
+          id="apiRequest"
+          style="font-size: 13px; color: #666; margin: 5px 0"
+        ></div>
+        <div class="output-box" id="apiOutput" style="min-height: 100px">
+          Start your server first, then click a button above... How to start: 1.
+          Open VS Code terminal 2. cd module-2 3. npm install express 4. npm
+          start
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         SUMMARY: SA → CODE MAPPING
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>🗺️ Big Picture: Your Flowchart → Code</h2>
+        <p>Here's how everything maps together after Modules 1 & 2:</p>
+
+        <table>
+          <tr>
+            <th>Flowchart Step</th>
+            <th>Who?</th>
+            <th>Code</th>
+            <th>Module</th>
+          </tr>
+          <tr>
+            <td>Passenger visits website</td>
+            <td>Browser</td>
+            <td>Opens index.html</td>
+            <td>1 ✅</td>
+          </tr>
+          <tr>
+            <td>Enter search inputs</td>
+            <td>Browser</td>
+            <td>HTML &lt;form&gt; + &lt;input&gt;</td>
+            <td>1 ✅</td>
+          </tr>
+          <tr>
+            <td>Inputs valid? → Show field errors</td>
+            <td>Browser</td>
+            <td>JavaScript if/else validation</td>
+            <td>1 ✅</td>
+          </tr>
+          <tr>
+            <td>GET /api/flights</td>
+            <td><strong>Server</strong></td>
+            <td><code>app.get("/api/flights", ...)</code></td>
+            <td><strong>2 ✅</strong></td>
+          </tr>
+          <tr>
+            <td>Fare calculation / Flight found?</td>
+            <td><strong>Server</strong></td>
+            <td><code>flights.filter(...)</code></td>
+            <td><strong>2 ✅</strong></td>
+          </tr>
+          <tr>
+            <td>Display results to passenger</td>
+            <td>Browser</td>
+            <td>Loop through JSON → build HTML cards</td>
+            <td>1 ✅</td>
+          </tr>
+          <tr>
+            <td>Rate limited?</td>
+            <td>Server</td>
+            <td>Middleware (Module 9)</td>
+            <td>9</td>
+          </tr>
+          <tr>
+            <td>POST /api/seats/hold</td>
+            <td>Server</td>
+            <td><code>app.post("/api/seats/hold", ...)</code></td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>Login / Register</td>
+            <td>Both</td>
+            <td>Auth endpoints + login form</td>
+            <td>6</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+         QUIZ
+         ══════════════════════════════════════════════ -->
+
+      <div class="card">
+        <h2>📝 Quiz — Module 2, Lesson 1</h2>
+
+        <p>
+          <strong>Q1.</strong> What does
+          <code>app.get("/api/flights", ...)</code> do?
+        </p>
+        <p>
+          A) Sends a GET request to another server<br />
+          B) Defines a route that handles GET requests to /api/flights<br />
+          C) Gets all files from the flights folder<br />
+          D) Downloads flight data from the internet
+        </p>
+
+        <p>
+          <strong>Q2.</strong> If a user visits
+          <code>/api/flights?origin=BKK&dest=NRT</code>, what is
+          <code>req.query.dest</code>?
+        </p>
+        <p>
+          A) "BKK"<br />
+          B) "NRT"<br />
+          C) "/api/flights"<br />
+          D) undefined
+        </p>
+
+        <p>
+          <strong>Q3.</strong> What HTTP status code means "you sent bad data"?
+        </p>
+        <p>
+          A) 200<br />
+          B) 404<br />
+          C) 400<br />
+          D) 500
+        </p>
+
+        <p>
+          <strong>Q4.</strong> What is the arrow function version of
+          <code>function add(a, b) { return a + b; }</code>?
+        </p>
+        <p>
+          A) <code>const add = (a, b) => { return a + b; }</code><br />
+          B) <code>const add = (a, b) -> a + b</code><br />
+          C) <code>add => (a, b) { return a + b; }</code><br />
+          D) <code>function => add(a, b) { a + b }</code>
+        </p>
+
+        <p>
+          <strong>Q5. (Bonus):</strong> In our server, the flight data is stored
+          in a JavaScript array (in memory). What happens to all the data if we
+          stop and restart the server? Why is this a problem, and what would fix
+          it? (Hint: think about Module 4 in the roadmap)
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // API Tester
+      async function testApi(endpoint) {
+        const baseUrl = "http://localhost:3000";
+        const url = baseUrl + endpoint;
+        const requestDiv = document.getElementById("apiRequest");
+        const outputDiv = document.getElementById("apiOutput");
+
+        requestDiv.innerHTML = "→ <strong>GET</strong> " + escapeHtml(url);
+        outputDiv.textContent = "Loading...";
+
+        try {
+          const startTime = performance.now();
+          const response = await fetch(url);
+          const endTime = performance.now();
+          const data = await response.json();
+
+          let output =
+            "Status: " +
+            response.status +
+            " " +
+            (response.ok ? "✅ OK" : "❌ Error") +
+            "\n";
+          output += "Time: " + Math.round(endTime - startTime) + "ms\n";
+          output += "─".repeat(50) + "\n\n";
+          output += JSON.stringify(data, null, 2);
+
+          outputDiv.textContent = output;
+          outputDiv.style.color = response.ok ? "#00ff88" : "#ff5252";
+        } catch (err) {
+          outputDiv.style.color = "#ff5252";
+          outputDiv.textContent =
+            "❌ Connection failed!\n\n" +
+            "Make sure your server is running:\n" +
+            "  1. Open VS Code terminal\n" +
+            "  2. cd module-2\n" +
+            "  3. npm install express\n" +
+            "  4. npm start\n\n" +
+            "Error: " +
+            err.message;
+        }
+      }
+
+      function clearApiOutput() {
+        document.getElementById("apiOutput").textContent =
+          "Click a button above to test an API endpoint...";
+        document.getElementById("apiOutput").style.color = "#00ff88";
+        document.getElementById("apiRequest").innerHTML = "";
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+      }
+    </script>
+  </body>
+</html>
