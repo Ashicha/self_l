@@ -1,0 +1,1601 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkyBook — Flight Booking</title>
+    <style>
+      /* ═══════════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════════ */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: #f0f4f8;
+        color: #1a202c;
+        min-height: 100vh;
+      }
+
+      /* ═══════════════════════════════════════════
+       HEADER / NAVBAR
+       ═══════════════════════════════════════════ */
+      .navbar {
+        background: linear-gradient(135deg, #1e3a5f 0%, #0f2440 100%);
+        color: white;
+        padding: 0 24px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .navbar .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+      .navbar .logo span {
+        color: #60a5fa;
+      }
+      .nav-links {
+        display: flex;
+        gap: 24px;
+      }
+      .nav-links a {
+        color: #94a3b8;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: white;
+      }
+
+      /* ═══════════════════════════════════════════
+       HERO / SEARCH SECTION
+       ═══════════════════════════════════════════ */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          #1e3a5f 0%,
+          #2d5a8e 50%,
+          #3b82f6 100%
+        );
+        padding: 48px 24px 56px;
+        text-align: center;
+        color: white;
+      }
+      .hero h1 {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .hero p {
+        color: #bfdbfe;
+        font-size: 16px;
+        margin-bottom: 32px;
+      }
+
+      .search-box {
+        background: white;
+        border-radius: 16px;
+        padding: 24px 28px;
+        max-width: 800px;
+        margin: 0 auto;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        align-items: flex-end;
+      }
+      .form-group {
+        flex: 1;
+        min-width: 140px;
+      }
+      .form-group label {
+        display: block;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #64748b;
+        margin-bottom: 6px;
+      }
+      .form-group select,
+      .form-group input {
+        width: 100%;
+        padding: 10px 14px;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 15px;
+        color: #1a202c;
+        background: #f8fafc;
+        transition: border-color 0.2s;
+        outline: none;
+      }
+      .form-group select:focus,
+      .form-group input:focus {
+        border-color: #3b82f6;
+      }
+
+      .btn-search {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        border: none;
+        padding: 12px 32px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        white-space: nowrap;
+      }
+      .btn-search:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+      }
+
+      /* ═══════════════════════════════════════════
+       MAIN CONTENT
+       ═══════════════════════════════════════════ */
+      .main {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 24px 20px 80px;
+      }
+
+      /* ═══════════════════════════════════════════
+       PAGE VIEWS (only one visible at a time)
+       ═══════════════════════════════════════════ */
+      .page {
+        display: none;
+      }
+      .page.active {
+        display: block;
+      }
+
+      /* ═══════════════════════════════════════════
+       STEPPER
+       ═══════════════════════════════════════════ */
+      .stepper {
+        display: flex;
+        justify-content: center;
+        gap: 0;
+        margin: 24px 0;
+      }
+      .stepper-step {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .stepper-circle {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 700;
+        background: #e2e8f0;
+        color: #64748b;
+        transition: all 0.3s;
+      }
+      .stepper-circle.active {
+        background: #3b82f6;
+        color: white;
+      }
+      .stepper-circle.done {
+        background: #10b981;
+        color: white;
+      }
+      .stepper-label {
+        font-size: 13px;
+        color: #64748b;
+        font-weight: 500;
+      }
+      .stepper-label.active {
+        color: #1e40af;
+        font-weight: 700;
+      }
+      .stepper-line {
+        width: 48px;
+        height: 2px;
+        background: #e2e8f0;
+        margin: 0 6px;
+        align-self: center;
+      }
+      .stepper-line.done {
+        background: #10b981;
+      }
+
+      /* ═══════════════════════════════════════════
+       FLIGHT RESULTS
+       ═══════════════════════════════════════════ */
+      .results-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .results-header h2 {
+        font-size: 20px;
+        color: #1e293b;
+      }
+      .results-count {
+        color: #64748b;
+        font-size: 14px;
+      }
+
+      .flight-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .flight-card:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.12);
+      }
+      .flight-card.sold-out {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .flight-card.sold-out:hover {
+        border-color: #ef4444;
+      }
+
+      .fc-airline {
+        text-align: center;
+        min-width: 70px;
+      }
+      .fc-airline .code {
+        font-size: 18px;
+        font-weight: 800;
+        color: #1e3a5f;
+      }
+      .fc-airline .class {
+        font-size: 11px;
+        color: #64748b;
+        margin-top: 2px;
+      }
+
+      .fc-times {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .fc-time {
+        text-align: center;
+      }
+      .fc-time .time {
+        font-size: 22px;
+        font-weight: 700;
+        color: #1e293b;
+      }
+      .fc-time .city {
+        font-size: 12px;
+        color: #64748b;
+        margin-top: 2px;
+      }
+      .fc-route {
+        flex: 1;
+        text-align: center;
+      }
+      .fc-route .line {
+        height: 2px;
+        background: #cbd5e1;
+        position: relative;
+        margin: 0 12px;
+      }
+      .fc-route .line::after {
+        content: "✈";
+        position: absolute;
+        top: -10px;
+        right: -4px;
+        font-size: 14px;
+        color: #3b82f6;
+      }
+      .fc-route .duration {
+        font-size: 11px;
+        color: #94a3b8;
+        margin-top: 6px;
+      }
+
+      .fc-price {
+        text-align: right;
+        min-width: 120px;
+      }
+      .fc-price .amount {
+        font-size: 22px;
+        font-weight: 800;
+        color: #1e3a5f;
+      }
+      .fc-price .currency {
+        font-size: 12px;
+        color: #64748b;
+      }
+      .fc-price .seats {
+        font-size: 12px;
+        margin-top: 4px;
+      }
+      .fc-price .seats.low {
+        color: #ef4444;
+        font-weight: 600;
+      }
+      .fc-price .seats.ok {
+        color: #10b981;
+      }
+      .fc-price .seats.none {
+        color: #ef4444;
+        font-weight: 700;
+      }
+
+      .no-results {
+        text-align: center;
+        padding: 60px 20px;
+        color: #64748b;
+      }
+      .no-results .icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+      }
+
+      /* ═══════════════════════════════════════════
+       SEAT SELECTION
+       ═══════════════════════════════════════════ */
+      .detail-card {
+        background: white;
+        border-radius: 12px;
+        padding: 28px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        margin-bottom: 16px;
+      }
+      .detail-card h3 {
+        font-size: 18px;
+        color: #1e293b;
+        margin-bottom: 16px;
+      }
+
+      .seat-info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 14px;
+      }
+      .seat-info-row .label {
+        color: #64748b;
+      }
+      .seat-info-row .value {
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      .input-row {
+        margin-top: 16px;
+      }
+      .input-row label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: #475569;
+        margin-bottom: 6px;
+      }
+      .input-row input {
+        width: 100%;
+        padding: 10px 14px;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 15px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .input-row input:focus {
+        border-color: #3b82f6;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        border: none;
+        padding: 12px 28px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.15s;
+        width: 100%;
+        margin-top: 16px;
+      }
+      .btn-primary:hover {
+        transform: translateY(-1px);
+      }
+      .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .btn-secondary {
+        background: #f1f5f9;
+        color: #475569;
+        border: 2px solid #e2e8f0;
+        padding: 10px 24px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-secondary:hover {
+        background: #e2e8f0;
+      }
+
+      .btn-skip {
+        background: transparent;
+        color: #64748b;
+        border: none;
+        padding: 10px;
+        font-size: 14px;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
+      /* ═══════════════════════════════════════════
+       PROMO
+       ═══════════════════════════════════════════ */
+      .promo-row {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+      }
+      .promo-row .input-row {
+        flex: 1;
+        margin-top: 0;
+      }
+      .promo-result {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 14px;
+      }
+      .promo-result.valid {
+        background: #ecfdf5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
+      }
+      .promo-result.invalid {
+        background: #fef2f2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+      }
+
+      /* ═══════════════════════════════════════════
+       BOOKING SUMMARY / CONFIRMATION
+       ═══════════════════════════════════════════ */
+      .summary-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin: 16px 0;
+      }
+      .summary-item {
+        padding: 12px;
+        background: #f8fafc;
+        border-radius: 8px;
+      }
+      .summary-item .s-label {
+        font-size: 11px;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .summary-item .s-value {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1e293b;
+        margin-top: 4px;
+      }
+
+      .price-breakdown {
+        margin-top: 16px;
+        border-top: 2px solid #e2e8f0;
+        padding-top: 16px;
+      }
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 0;
+        font-size: 14px;
+      }
+      .price-row.total {
+        font-size: 20px;
+        font-weight: 800;
+        color: #1e3a5f;
+        border-top: 2px solid #1e3a5f;
+        margin-top: 8px;
+        padding-top: 12px;
+      }
+      .price-row .discount {
+        color: #10b981;
+      }
+
+      /* ═══════════════════════════════════════════
+       CONFIRMATION SUCCESS
+       ═══════════════════════════════════════════ */
+      .confirmation {
+        text-align: center;
+        padding: 40px 20px;
+      }
+      .confirm-icon {
+        font-size: 64px;
+        margin-bottom: 16px;
+      }
+      .confirm-title {
+        font-size: 28px;
+        font-weight: 800;
+        color: #065f46;
+        margin-bottom: 8px;
+      }
+      .confirm-pnr {
+        display: inline-block;
+        background: #1e3a5f;
+        color: white;
+        padding: 12px 32px;
+        border-radius: 10px;
+        font-size: 32px;
+        font-weight: 800;
+        letter-spacing: 4px;
+        margin: 16px 0;
+        font-family: "Cascadia Code", monospace;
+      }
+      .confirm-subtitle {
+        color: #64748b;
+        font-size: 14px;
+        margin-bottom: 24px;
+      }
+
+      .ticket {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: 24px auto;
+        text-align: left;
+      }
+      .ticket-header {
+        background: linear-gradient(135deg, #1e3a5f, #2d5a8e);
+        color: white;
+        padding: 16px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .ticket-header .t-logo {
+        font-weight: 700;
+        font-size: 16px;
+      }
+      .ticket-header .t-class {
+        font-size: 12px;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 4px 10px;
+        border-radius: 20px;
+      }
+      .ticket-body {
+        padding: 24px;
+      }
+      .ticket-route {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .ticket-city {
+        text-align: center;
+      }
+      .ticket-city .code {
+        font-size: 28px;
+        font-weight: 800;
+        color: #1e3a5f;
+      }
+      .ticket-city .time {
+        font-size: 14px;
+        color: #64748b;
+        margin-top: 4px;
+      }
+      .ticket-plane {
+        font-size: 24px;
+        color: #3b82f6;
+      }
+      .ticket-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .ticket-detail .td-label {
+        font-size: 10px;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .ticket-detail .td-value {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1e293b;
+      }
+      .ticket-footer {
+        border-top: 2px dashed #e2e8f0;
+        padding: 16px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .ticket-footer .barcode {
+        font-family: monospace;
+        letter-spacing: 2px;
+        color: #94a3b8;
+        font-size: 12px;
+      }
+      .ticket-footer .price {
+        font-size: 20px;
+        font-weight: 800;
+        color: #1e3a5f;
+      }
+
+      /* ═══════════════════════════════════════════
+       LOOKUP PAGE
+       ═══════════════════════════════════════════ */
+      .lookup-box {
+        max-width: 500px;
+        margin: 40px auto;
+        text-align: center;
+      }
+      .lookup-box h2 {
+        font-size: 24px;
+        color: #1e293b;
+        margin-bottom: 8px;
+      }
+      .lookup-box p {
+        color: #64748b;
+        margin-bottom: 24px;
+      }
+      .lookup-input-row {
+        display: flex;
+        gap: 10px;
+      }
+      .lookup-input-row input {
+        flex: 1;
+        padding: 12px 16px;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        text-align: center;
+        outline: none;
+      }
+      .lookup-input-row input:focus {
+        border-color: #3b82f6;
+      }
+
+      /* ═══════════════════════════════════════════
+       ERROR BAR
+       ═══════════════════════════════════════════ */
+      .error-bar {
+        background: #fef2f2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin: 12px 0;
+        font-size: 14px;
+        display: none;
+      }
+      .error-bar.show {
+        display: block;
+      }
+
+      .success-bar {
+        background: #ecfdf5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin: 12px 0;
+        font-size: 14px;
+        display: none;
+      }
+      .success-bar.show {
+        display: block;
+      }
+
+      /* ═══════════════════════════════════════════
+       LOADING SPINNER
+       ═══════════════════════════════════════════ */
+      .spinner {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        vertical-align: middle;
+        margin-right: 8px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ═══════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════ */
+      @media (max-width: 640px) {
+        .search-box {
+          flex-direction: column;
+        }
+        .flight-card {
+          flex-direction: column;
+          text-align: center;
+        }
+        .fc-price {
+          text-align: center;
+        }
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+        .stepper {
+          flex-wrap: wrap;
+          gap: 4px;
+        }
+      }
+
+      /* ═══════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════ */
+      .footer {
+        text-align: center;
+        padding: 24px;
+        color: #94a3b8;
+        font-size: 12px;
+        border-top: 1px solid #e2e8f0;
+        margin-top: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- NAVBAR                                               -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <nav class="navbar">
+      <div class="logo">✈️ <span>Mintel</span>airline</div>
+      <div class="nav-links">
+        <a class="active" onclick="showPage('home')" id="nav-home"
+          >Book Flight</a
+        >
+        <a onclick="showPage('lookup')" id="nav-lookup">My Booking</a>
+      </div>
+    </nav>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- HERO + SEARCH                                        -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <div class="hero" id="hero-section">
+      <h1>Where would you like to fly?</h1>
+      <p>Search hundreds of flights across Asia & beyond</p>
+
+      <div class="search-box">
+        <div class="form-group">
+          <label>From</label>
+          <select id="search-origin"></select>
+        </div>
+        <div class="form-group">
+          <label>To</label>
+          <select id="search-dest"></select>
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="search-date" />
+        </div>
+        <div class="form-group">
+          <label>Passengers</label>
+          <select id="search-pax">
+            <option value="1">1 Adult</option>
+            <option value="2">2 Adults</option>
+            <option value="3">3 Adults</option>
+          </select>
+        </div>
+        <button class="btn-search" onclick="searchFlights()">
+          Search Flights
+        </button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- MAIN CONTENT AREA                                    -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <div class="main">
+      <!-- ── HOME PAGE (results) ── -->
+      <div class="page active" id="page-home">
+        <div id="results-area"></div>
+      </div>
+
+      <!-- ── BOOKING FLOW ── -->
+      <div class="page" id="page-booking">
+        <!-- Stepper -->
+        <div class="stepper" id="stepper">
+          <div class="stepper-step">
+            <div class="stepper-circle active" id="sc-1">1</div>
+            <span class="stepper-label active" id="sl-1">Select Seat</span>
+          </div>
+          <div class="stepper-line" id="sline-1"></div>
+          <div class="stepper-step">
+            <div class="stepper-circle" id="sc-2">2</div>
+            <span class="stepper-label" id="sl-2">Promo</span>
+          </div>
+          <div class="stepper-line" id="sline-2"></div>
+          <div class="stepper-step">
+            <div class="stepper-circle" id="sc-3">3</div>
+            <span class="stepper-label" id="sl-3">Confirm</span>
+          </div>
+        </div>
+
+        <!-- Step 1: Seat Selection -->
+        <div id="booking-step-1">
+          <div class="detail-card">
+            <h3>💺 Select Your Seat</h3>
+            <div id="selected-flight-info"></div>
+            <div class="error-bar" id="seat-error"></div>
+            <div class="input-row">
+              <label>Passenger Name</label>
+              <input type="text" id="input-name" placeholder="e.g. Vasawan" />
+            </div>
+            <div class="input-row">
+              <label>Seat Number</label>
+              <input
+                type="text"
+                id="input-seat"
+                placeholder="e.g. 12A, 23F, 1B"
+                maxlength="4"
+                style="text-transform: uppercase"
+              />
+            </div>
+            <button class="btn-primary" onclick="holdSeat()">
+              Hold This Seat
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Promo Code -->
+        <div id="booking-step-2" style="display: none">
+          <div class="detail-card">
+            <h3>🏷️ Have a Promo Code?</h3>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 16px">
+              Enter a promo code to get a discount on your flight — or skip to
+              continue at full price.
+            </p>
+            <div class="promo-row">
+              <div class="input-row">
+                <label>Promo Code</label>
+                <input
+                  type="text"
+                  id="input-promo"
+                  placeholder="e.g. SAVE10"
+                  style="text-transform: uppercase"
+                />
+              </div>
+              <button
+                class="btn-primary"
+                style="
+                  width: auto;
+                  margin-top: 0;
+                  padding: 10px 24px;
+                  align-self: flex-end;
+                "
+                onclick="applyPromo()"
+              >
+                Apply
+              </button>
+            </div>
+            <div id="promo-result"></div>
+            <div style="display: flex; gap: 10px; margin-top: 16px">
+              <button
+                class="btn-primary"
+                id="btn-promo-next"
+                onclick="goToStep3()"
+                style="display: none"
+              >
+                Continue to Confirmation
+              </button>
+              <button class="btn-skip" onclick="skipPromo()">
+                Skip — no promo code →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Confirmation -->
+        <div id="booking-step-3" style="display: none">
+          <div class="detail-card">
+            <h3>📋 Booking Summary</h3>
+            <div class="summary-grid" id="summary-grid"></div>
+            <div class="price-breakdown" id="price-breakdown"></div>
+            <div class="error-bar" id="booking-error"></div>
+            <button
+              class="btn-primary"
+              onclick="confirmBooking()"
+              id="btn-confirm"
+            >
+              ✅ Confirm & Pay
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4: Success! -->
+        <div id="booking-step-4" style="display: none">
+          <div class="detail-card">
+            <div class="confirmation">
+              <div class="confirm-icon">🎉</div>
+              <div class="confirm-title">Booking Confirmed!</div>
+              <div class="confirm-subtitle">Your PNR (booking reference):</div>
+              <div class="confirm-pnr" id="confirm-pnr"></div>
+              <p style="color: #64748b; font-size: 13px; margin-bottom: 24px">
+                Save this code — you'll need it to check in and manage your
+                booking.
+              </p>
+              <div id="ticket-container"></div>
+              <div
+                style="
+                  margin-top: 24px;
+                  display: flex;
+                  gap: 10px;
+                  justify-content: center;
+                  flex-wrap: wrap;
+                "
+              >
+                <button
+                  class="btn-primary"
+                  style="width: auto"
+                  onclick="
+                    showPage('home');
+                    resetBooking();
+                  "
+                >
+                  Book Another Flight
+                </button>
+                <button class="btn-secondary" onclick="showPage('lookup')">
+                  View My Booking
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── LOOKUP PAGE ── -->
+      <div class="page" id="page-lookup">
+        <div class="lookup-box">
+          <h2>📄 Find Your Booking</h2>
+          <p>
+            Enter your 6-character PNR code to retrieve your booking details.
+          </p>
+          <div class="lookup-input-row">
+            <input
+              type="text"
+              id="lookup-pnr"
+              placeholder="ABC123"
+              maxlength="6"
+            />
+            <button class="btn-search" onclick="lookupBooking()">Find</button>
+          </div>
+          <div class="error-bar" id="lookup-error"></div>
+          <div id="lookup-result" style="margin-top: 24px"></div>
+        </div>
+      </div>
+    </div>
+    <!-- /main -->
+
+    <div class="footer">
+      SkyBook © 2026 — Flight Booking Learning Project &nbsp;|&nbsp; Powered by
+      your Express.js API
+    </div>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- JAVASCRIPT — All the logic                           -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <script>
+      const API = "http://localhost:3000";
+
+      // ── App State ──
+      let state = {
+        selectedFlight: null,
+        passengerName: "",
+        seatNumber: "",
+        promoCode: null,
+        promoData: null,
+        finalPrice: null,
+      };
+
+      // Airport display names
+      const airportNames = {
+        BKK: "Bangkok (Suvarnabhumi)",
+        DMK: "Bangkok (Don Mueang)",
+        CNX: "Chiang Mai",
+        HKT: "Phuket",
+        USM: "Koh Samui",
+        CEI: "Chiang Rai",
+        NRT: "Tokyo (Narita)",
+        HND: "Tokyo (Haneda)",
+        KIX: "Osaka (Kansai)",
+        FUK: "Fukuoka",
+        ICN: "Seoul (Incheon)",
+        GMP: "Seoul (Gimpo)",
+        SIN: "Singapore",
+        HKG: "Hong Kong",
+        TPE: "Taipei",
+        KUL: "Kuala Lumpur",
+        SYD: "Sydney",
+        LHR: "London (Heathrow)",
+        JFK: "New York (JFK)",
+        LAX: "Los Angeles",
+        DXB: "Dubai",
+      };
+
+      // ══════════════════════════════════════
+      // INIT — Load airports into dropdowns
+      // ══════════════════════════════════════
+      async function init() {
+        // Set default date to tomorrow
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById("search-date").value = tomorrow
+          .toISOString()
+          .split("T")[0];
+
+        try {
+          const res = await fetch(`${API}/api/airports`);
+          const data = await res.json();
+          const originSel = document.getElementById("search-origin");
+          const destSel = document.getElementById("search-dest");
+
+          data.airports.forEach((code) => {
+            const name = airportNames[code] || code;
+            originSel.innerHTML += `<option value="${code}" ${code === "BKK" ? "selected" : ""}>${code} — ${name}</option>`;
+            destSel.innerHTML += `<option value="${code}" ${code === "NRT" ? "selected" : ""}>${code} — ${name}</option>`;
+          });
+        } catch (err) {
+          console.error("Cannot connect to API:", err);
+          document.getElementById("results-area").innerHTML = `
+          <div class="no-results">
+            <div class="icon">⚠️</div>
+            <h3>Cannot connect to server</h3>
+            <p>Make sure the server is running:<br><code>cd module-2 && npm start</code></p>
+          </div>`;
+        }
+      }
+
+      // ══════════════════════════════════════
+      // PAGE NAVIGATION
+      // ══════════════════════════════════════
+      function showPage(name) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-links a")
+          .forEach((a) => a.classList.remove("active"));
+
+        if (name === "home") {
+          document.getElementById("page-home").classList.add("active");
+          document.getElementById("nav-home").classList.add("active");
+          document.getElementById("hero-section").style.display = "";
+        } else if (name === "booking") {
+          document.getElementById("page-booking").classList.add("active");
+          document.getElementById("hero-section").style.display = "none";
+        } else if (name === "lookup") {
+          document.getElementById("page-lookup").classList.add("active");
+          document.getElementById("nav-lookup").classList.add("active");
+          document.getElementById("hero-section").style.display = "none";
+        }
+      }
+
+      // ══════════════════════════════════════
+      // STEP 1: SEARCH FLIGHTS
+      // ══════════════════════════════════════
+      async function searchFlights() {
+        const origin = document.getElementById("search-origin").value;
+        const dest = document.getElementById("search-dest").value;
+        const area = document.getElementById("results-area");
+
+        if (origin === dest) {
+          area.innerHTML = `<div class="no-results"><div class="icon">🤔</div><h3>Origin and destination must be different</h3></div>`;
+          return;
+        }
+
+        area.innerHTML = `<div class="no-results"><div class="spinner" style="border-color:#3b82f6;border-top-color:#1e3a5f;width:32px;height:32px"></div><p style="margin-top:16px">Searching flights...</p></div>`;
+
+        try {
+          const res = await fetch(
+            `${API}/api/flights?origin=${origin}&dest=${dest}`,
+          );
+          const data = await res.json();
+
+          if (data.count === 0) {
+            area.innerHTML = `
+            <div class="no-results">
+              <div class="icon">✈️</div>
+              <h3>No flights found</h3>
+              <p>${airportNames[origin] || origin} → ${airportNames[dest] || dest}</p>
+              <p style="margin-top:8px;color:#94a3b8">Try a different route. Popular: BKK → NRT, BKK → SIN, BKK → ICN</p>
+            </div>`;
+            return;
+          }
+
+          let html = `
+          <div class="results-header">
+            <h2>${origin} → ${dest}</h2>
+            <span class="results-count">${data.count} flight${data.count > 1 ? "s" : ""} found</span>
+          </div>`;
+
+          data.flights.forEach((f) => {
+            const isSoldOut = f.seatsLeft === 0;
+            const seatsClass = isSoldOut
+              ? "none"
+              : f.seatsLeft <= 5
+                ? "low"
+                : "ok";
+            const seatsText = isSoldOut
+              ? "SOLD OUT"
+              : `${f.seatsLeft} seats left`;
+
+            html += `
+            <div class="flight-card ${isSoldOut ? "sold-out" : ""}" 
+                 onclick="${isSoldOut ? "" : `selectFlight(${f.id})`}" 
+                 title="${isSoldOut ? "This flight is sold out" : "Click to book this flight"}">
+              <div class="fc-airline">
+                <div class="code">${f.flightNumber}</div>
+                <div class="class">${f.cabinClass}</div>
+              </div>
+              <div class="fc-times">
+                <div class="fc-time">
+                  <div class="time">${f.departTime}</div>
+                  <div class="city">${f.origin}</div>
+                </div>
+                <div class="fc-route">
+                  <div class="line"></div>
+                  <div class="duration">Direct</div>
+                </div>
+                <div class="fc-time">
+                  <div class="time">${f.arriveTime}</div>
+                  <div class="city">${f.dest}</div>
+                </div>
+              </div>
+              <div class="fc-price">
+                <div class="amount">${f.price.toLocaleString()}</div>
+                <div class="currency">THB / person</div>
+                <div class="seats ${seatsClass}">${seatsText}</div>
+              </div>
+            </div>`;
+          });
+
+          area.innerHTML = html;
+        } catch (err) {
+          area.innerHTML = `
+          <div class="no-results">
+            <div class="icon">⚠️</div>
+            <h3>Connection Error</h3>
+            <p>Cannot reach the server. Make sure it's running on port 3000.</p>
+          </div>`;
+        }
+      }
+
+      // ══════════════════════════════════════
+      // SELECT A FLIGHT → BOOKING FLOW
+      // ══════════════════════════════════════
+      async function selectFlight(flightId) {
+        try {
+          const res = await fetch(`${API}/api/flights/${flightId}`);
+          const flight = await res.json();
+
+          state.selectedFlight = flight;
+          state.finalPrice = flight.price;
+
+          // Show flight info
+          document.getElementById("selected-flight-info").innerHTML = `
+          <div class="seat-info-row"><span class="label">Flight</span><span class="value">${flight.flightNumber}</span></div>
+          <div class="seat-info-row"><span class="label">Route</span><span class="value">${flight.origin} → ${flight.dest}</span></div>
+          <div class="seat-info-row"><span class="label">Departure</span><span class="value">${flight.departTime}</span></div>
+          <div class="seat-info-row"><span class="label">Arrival</span><span class="value">${flight.arriveTime}</span></div>
+          <div class="seat-info-row"><span class="label">Class</span><span class="value">${flight.cabinClass}</span></div>
+          <div class="seat-info-row"><span class="label">Price</span><span class="value">${flight.price.toLocaleString()} THB</span></div>
+          <div class="seat-info-row"><span class="label">Seats Left</span><span class="value">${flight.seatsLeft}</span></div>
+        `;
+
+          // Reset booking steps
+          resetBookingSteps();
+          showPage("booking");
+          updateStepper(1);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      function resetBookingSteps() {
+        document.getElementById("booking-step-1").style.display = "";
+        document.getElementById("booking-step-2").style.display = "none";
+        document.getElementById("booking-step-3").style.display = "none";
+        document.getElementById("booking-step-4").style.display = "none";
+        document.getElementById("seat-error").className = "error-bar";
+        document.getElementById("input-name").value = "";
+        document.getElementById("input-seat").value = "";
+        document.getElementById("input-promo").value = "";
+        document.getElementById("promo-result").innerHTML = "";
+        document.getElementById("btn-promo-next").style.display = "none";
+        state.promoCode = null;
+        state.promoData = null;
+      }
+
+      function updateStepper(step) {
+        for (let i = 1; i <= 3; i++) {
+          const circle = document.getElementById(`sc-${i}`);
+          const label = document.getElementById(`sl-${i}`);
+          circle.className = "stepper-circle";
+          label.className = "stepper-label";
+          if (i < step) {
+            circle.className += " done";
+            circle.textContent = "✓";
+          } else if (i === step) {
+            circle.className += " active";
+            label.className += " active";
+          }
+          if (i < 3) {
+            document.getElementById(`sline-${i}`).className =
+              i < step ? "stepper-line done" : "stepper-line";
+          }
+        }
+      }
+
+      // ══════════════════════════════════════
+      // STEP 2: HOLD SEAT
+      // ══════════════════════════════════════
+      async function holdSeat() {
+        const name = document.getElementById("input-name").value.trim();
+        const seat = document
+          .getElementById("input-seat")
+          .value.trim()
+          .toUpperCase();
+        const errEl = document.getElementById("seat-error");
+        errEl.className = "error-bar";
+
+        if (!name) {
+          errEl.textContent = "Please enter your name";
+          errEl.className = "error-bar show";
+          return;
+        }
+        if (!seat) {
+          errEl.textContent = "Please enter a seat number (e.g. 12A)";
+          errEl.className = "error-bar show";
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API}/api/seats/hold`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              flightId: state.selectedFlight.id,
+              seatNumber: seat,
+              passengerName: name,
+            }),
+          });
+          const data = await res.json();
+
+          if (!res.ok) {
+            errEl.textContent = `${data.error}: ${data.message}`;
+            errEl.className = "error-bar show";
+            return;
+          }
+
+          state.passengerName = name;
+          state.seatNumber = seat;
+
+          // Move to Step 2 (promo)
+          document.getElementById("booking-step-1").style.display = "none";
+          document.getElementById("booking-step-2").style.display = "";
+          updateStepper(2);
+        } catch (err) {
+          errEl.textContent = "Cannot connect to server";
+          errEl.className = "error-bar show";
+        }
+      }
+
+      // ══════════════════════════════════════
+      // STEP 3: PROMO CODE
+      // ══════════════════════════════════════
+      async function applyPromo() {
+        const code = document
+          .getElementById("input-promo")
+          .value.trim()
+          .toUpperCase();
+        const resultEl = document.getElementById("promo-result");
+
+        if (!code) {
+          resultEl.innerHTML = `<div class="promo-result invalid">Please enter a promo code</div>`;
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API}/api/promos/validate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              code: code,
+              originalPrice: state.selectedFlight.price,
+            }),
+          });
+          const data = await res.json();
+
+          if (!data.valid) {
+            resultEl.innerHTML = `<div class="promo-result invalid">❌ ${data.message}</div>`;
+            state.promoCode = null;
+            state.promoData = null;
+            document.getElementById("btn-promo-next").style.display = "none";
+            return;
+          }
+
+          state.promoCode = code;
+          state.promoData = data;
+          state.finalPrice = data.finalPrice;
+
+          resultEl.innerHTML = `
+          <div class="promo-result valid">
+            ✅ <strong>${data.description}</strong><br>
+            Save ${data.discountAmount.toLocaleString()} THB (${data.discountPercent}% off)<br>
+            New price: <strong>${data.finalPrice.toLocaleString()} THB</strong>
+          </div>`;
+          document.getElementById("btn-promo-next").style.display = "";
+        } catch (err) {
+          resultEl.innerHTML = `<div class="promo-result invalid">Cannot connect to server</div>`;
+        }
+      }
+
+      function skipPromo() {
+        state.promoCode = null;
+        state.promoData = null;
+        state.finalPrice = state.selectedFlight.price;
+        goToStep3();
+      }
+
+      function goToStep3() {
+        document.getElementById("booking-step-2").style.display = "none";
+        document.getElementById("booking-step-3").style.display = "";
+        updateStepper(3);
+
+        const f = state.selectedFlight;
+        document.getElementById("summary-grid").innerHTML = `
+        <div class="summary-item"><div class="s-label">Flight</div><div class="s-value">${f.flightNumber}</div></div>
+        <div class="summary-item"><div class="s-label">Route</div><div class="s-value">${f.origin} → ${f.dest}</div></div>
+        <div class="summary-item"><div class="s-label">Departure</div><div class="s-value">${f.departTime}</div></div>
+        <div class="summary-item"><div class="s-label">Class</div><div class="s-value">${f.cabinClass}</div></div>
+        <div class="summary-item"><div class="s-label">Passenger</div><div class="s-value">${state.passengerName}</div></div>
+        <div class="summary-item"><div class="s-label">Seat</div><div class="s-value">${state.seatNumber}</div></div>
+      `;
+
+        let priceHtml = `<div class="price-row"><span>Base fare</span><span>${f.price.toLocaleString()} THB</span></div>`;
+        if (state.promoData) {
+          priceHtml += `<div class="price-row"><span>Discount (${state.promoData.code})</span><span class="discount">-${state.promoData.discountAmount.toLocaleString()} THB</span></div>`;
+        }
+        priceHtml += `<div class="price-row total"><span>Total</span><span>${state.finalPrice.toLocaleString()} THB</span></div>`;
+        document.getElementById("price-breakdown").innerHTML = priceHtml;
+      }
+
+      // ══════════════════════════════════════
+      // STEP 4: CONFIRM BOOKING
+      // ══════════════════════════════════════
+      async function confirmBooking() {
+        const btn = document.getElementById("btn-confirm");
+        const errEl = document.getElementById("booking-error");
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span>Processing...';
+        errEl.className = "error-bar";
+
+        try {
+          const res = await fetch(`${API}/api/bookings`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              flightId: state.selectedFlight.id,
+              passengerName: state.passengerName,
+              seatNumber: state.seatNumber,
+              promoCode: state.promoCode || undefined,
+            }),
+          });
+          const data = await res.json();
+
+          if (!res.ok) {
+            errEl.textContent = data.error || "Booking failed";
+            errEl.className = "error-bar show";
+            btn.disabled = false;
+            btn.textContent = "✅ Confirm & Pay";
+            return;
+          }
+
+          const b = data.booking;
+
+          // Show confirmation
+          document.getElementById("booking-step-3").style.display = "none";
+          document.getElementById("booking-step-4").style.display = "";
+          document.getElementById("confirm-pnr").textContent = b.pnr;
+
+          // Auto-fill lookup input
+          document.getElementById("lookup-pnr").value = b.pnr;
+
+          // Render ticket
+          document.getElementById("ticket-container").innerHTML = `
+          <div class="ticket">
+            <div class="ticket-header">
+              <span class="t-logo">✈️ SkyBook Airlines</span>
+              <span class="t-class">${state.selectedFlight.cabinClass}</span>
+            </div>
+            <div class="ticket-body">
+              <div class="ticket-route">
+                <div class="ticket-city">
+                  <div class="code">${b.origin}</div>
+                  <div class="time">${b.departTime}</div>
+                </div>
+                <div class="ticket-plane">✈️ →</div>
+                <div class="ticket-city">
+                  <div class="code">${b.destination}</div>
+                  <div class="time">${state.selectedFlight.arriveTime}</div>
+                </div>
+              </div>
+              <div class="ticket-details">
+                <div class="ticket-detail"><div class="td-label">Passenger</div><div class="td-value">${b.passengerName}</div></div>
+                <div class="ticket-detail"><div class="td-label">Flight</div><div class="td-value">${b.flightNumber}</div></div>
+                <div class="ticket-detail"><div class="td-label">Seat</div><div class="td-value">${b.seatNumber}</div></div>
+                <div class="ticket-detail"><div class="td-label">PNR</div><div class="td-value">${b.pnr}</div></div>
+                <div class="ticket-detail"><div class="td-label">Booking ID</div><div class="td-value">#${b.bookingId}</div></div>
+                <div class="ticket-detail"><div class="td-label">Status</div><div class="td-value" style="color:#10b981">✅ ${b.status}</div></div>
+              </div>
+            </div>
+            <div class="ticket-footer">
+              <span class="barcode">||||| ${b.pnr} ||| ${b.bookingId} |||||</span>
+              <span class="price">${b.finalPrice.toLocaleString()} THB</span>
+            </div>
+          </div>`;
+
+          // Update stepper to all done
+          for (let i = 1; i <= 3; i++) {
+            document.getElementById(`sc-${i}`).className =
+              "stepper-circle done";
+            document.getElementById(`sc-${i}`).textContent = "✓";
+            if (i < 3)
+              document.getElementById(`sline-${i}`).className =
+                "stepper-line done";
+          }
+        } catch (err) {
+          errEl.textContent = "Cannot connect to server";
+          errEl.className = "error-bar show";
+          btn.disabled = false;
+          btn.textContent = "✅ Confirm & Pay";
+        }
+      }
+
+      // ══════════════════════════════════════
+      // LOOKUP BOOKING
+      // ══════════════════════════════════════
+      async function lookupBooking() {
+        const pnr = document
+          .getElementById("lookup-pnr")
+          .value.trim()
+          .toUpperCase();
+        const errEl = document.getElementById("lookup-error");
+        const resultEl = document.getElementById("lookup-result");
+        errEl.className = "error-bar";
+        resultEl.innerHTML = "";
+
+        if (!pnr || pnr.length !== 6) {
+          errEl.textContent = "Please enter a valid 6-character PNR code";
+          errEl.className = "error-bar show";
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API}/api/bookings/${pnr}`);
+          const b = await res.json();
+
+          if (!res.ok) {
+            errEl.textContent = b.message || "Booking not found";
+            errEl.className = "error-bar show";
+            return;
+          }
+
+          resultEl.innerHTML = `
+          <div class="ticket">
+            <div class="ticket-header">
+              <span class="t-logo">✈️ SkyBook Airlines</span>
+              <span class="t-class">Booking Found</span>
+            </div>
+            <div class="ticket-body">
+              <div class="ticket-route">
+                <div class="ticket-city">
+                  <div class="code">${b.origin}</div>
+                  <div class="time">${b.departTime}</div>
+                </div>
+                <div class="ticket-plane">✈️ →</div>
+                <div class="ticket-city">
+                  <div class="code">${b.destination}</div>
+                  <div class="time">—</div>
+                </div>
+              </div>
+              <div class="ticket-details">
+                <div class="ticket-detail"><div class="td-label">Passenger</div><div class="td-value">${b.passengerName}</div></div>
+                <div class="ticket-detail"><div class="td-label">Flight</div><div class="td-value">${b.flightNumber}</div></div>
+                <div class="ticket-detail"><div class="td-label">Seat</div><div class="td-value">${b.seatNumber}</div></div>
+                <div class="ticket-detail"><div class="td-label">PNR</div><div class="td-value">${b.pnr}</div></div>
+                <div class="ticket-detail"><div class="td-label">Status</div><div class="td-value" style="color:#10b981">✅ ${b.status}</div></div>
+                <div class="ticket-detail"><div class="td-label">Booked At</div><div class="td-value">${new Date(b.bookedAt).toLocaleString()}</div></div>
+              </div>
+            </div>
+            <div class="ticket-footer">
+              <span class="barcode">||||| ${b.pnr} ||| ${b.bookingId} |||||</span>
+              <span class="price">${b.finalPrice.toLocaleString()} THB</span>
+            </div>
+          </div>`;
+        } catch (err) {
+          errEl.textContent = "Cannot connect to server";
+          errEl.className = "error-bar show";
+        }
+      }
+
+      function resetBooking() {
+        state = {
+          selectedFlight: null,
+          passengerName: "",
+          seatNumber: "",
+          promoCode: null,
+          promoData: null,
+          finalPrice: null,
+        };
+        document.getElementById("results-area").innerHTML = "";
+      }
+
+      // ══════════════════════════════════════
+      // INIT ON LOAD
+      // ══════════════════════════════════════
+      init();
+    </script>
+  </body>
+</html>

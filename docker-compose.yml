@@ -1,0 +1,43 @@
+# ═══════════════════════════════════════════════════
+# docker-compose.yml — SkyBook with PostgreSQL
+# ═══════════════════════════════════════════════════
+#
+# Run:   docker-compose up --build
+# Stop:  docker-compose down
+# Reset: docker-compose down -v  (deletes DB data)
+#
+
+services:
+  # ── PostgreSQL Database ──
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: skybook
+      POSTGRES_USER: skybook
+      POSTGRES_PASSWORD: skybook123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U skybook"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+  # ── SkyBook API + Web App ──
+  skybook:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://skybook:skybook123@db:5432/skybook
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:
