@@ -1,0 +1,1805 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Senior Engineer Roadmap — Your Mentor's Worksheet</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0c0c0e;
+        --surface: #131317;
+        --card: #1a1a20;
+        --border: #2a2a35;
+        --accent: #e8ff47;
+        --accent2: #47b8ff;
+        --accent3: #ff6b47;
+        --accent4: #b847ff;
+        --text: #e8e8f0;
+        --muted: #6b6b80;
+        --done: #2a3a1a;
+        --done-border: #5a8a2a;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-weight: 300;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      /* ── HERO ── */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: 60px 40px 50px;
+        border-bottom: 1px solid var(--border);
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 60% -10%,
+            #1e2a00 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 50% 50% at 0% 100%,
+            #001a2a 0%,
+            transparent 60%
+          );
+      }
+
+      .hero-label {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: var(--accent);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        opacity: 0;
+        animation: fadeUp 0.6s 0.1s forwards;
+      }
+
+      .hero h1 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(52px, 8vw, 100px);
+        line-height: 0.92;
+        letter-spacing: 2px;
+        color: #fff;
+        opacity: 0;
+        animation: fadeUp 0.6s 0.2s forwards;
+      }
+
+      .hero h1 span {
+        color: var(--accent);
+      }
+
+      .hero-sub {
+        margin-top: 20px;
+        font-size: 16px;
+        color: var(--muted);
+        max-width: 560px;
+        opacity: 0;
+        animation: fadeUp 0.6s 0.35s forwards;
+      }
+
+      .hero-meta {
+        margin-top: 28px;
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fadeUp 0.6s 0.45s forwards;
+      }
+
+      .pill {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 6px 14px;
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 1px;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+
+      .pill strong {
+        color: var(--accent);
+      }
+
+      .progress-bar-wrap {
+        margin-top: 32px;
+        opacity: 0;
+        animation: fadeUp 0.6s 0.55s forwards;
+      }
+
+      .progress-label {
+        display: flex;
+        justify-content: space-between;
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+
+      .progress-track {
+        height: 4px;
+        background: var(--border);
+        border-radius: 2px;
+        max-width: 400px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: var(--accent);
+        border-radius: 2px;
+        width: 0%;
+        transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      /* ── LAYOUT ── */
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 40px 80px;
+      }
+
+      /* ── PHASE HEADER ── */
+      .phase {
+        margin-bottom: 48px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 0.5s forwards;
+      }
+
+      .phase:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .phase:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .phase:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .phase:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      .phase:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+      .phase:nth-child(6) {
+        animation-delay: 0.6s;
+      }
+
+      .phase-header {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .phase-number {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 48px;
+        line-height: 1;
+        opacity: 0.15;
+      }
+
+      .phase-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 28px;
+        letter-spacing: 1px;
+      }
+
+      .phase-badge {
+        margin-left: auto;
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 3px;
+      }
+
+      .badge-foundation {
+        background: #1a2a0a;
+        color: #8bc34a;
+        border: 1px solid #3a5a1a;
+      }
+      .badge-core {
+        background: #0a1a2a;
+        color: #47b8ff;
+        border: 1px solid #1a3a5a;
+      }
+      .badge-advanced {
+        background: #2a0a1a;
+        color: #ff6b9d;
+        border: 1px solid #5a1a3a;
+      }
+      .badge-senior {
+        background: #1a0a2a;
+        color: #b847ff;
+        border: 1px solid #3a1a5a;
+      }
+      .badge-soft {
+        background: #2a1a0a;
+        color: #ffb347;
+        border: 1px solid #5a3a1a;
+      }
+      .badge-portfolio {
+        background: #0a2a2a;
+        color: #47ffe8;
+        border: 1px solid #1a5a5a;
+      }
+
+      /* ── TASK GRID ── */
+      .task-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 12px;
+      }
+
+      .task-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 16px 18px;
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          background 0.2s,
+          transform 0.15s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .task-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: var(--accent-color, var(--border));
+        transition: background 0.2s;
+      }
+
+      .task-card:hover {
+        border-color: #3a3a50;
+        transform: translateY(-1px);
+      }
+
+      .task-card.done {
+        background: var(--done);
+        border-color: var(--done-border);
+      }
+
+      .task-card.done::before {
+        background: var(--done-border);
+      }
+
+      .task-top {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .checkbox {
+        width: 18px;
+        height: 18px;
+        border: 1.5px solid var(--border);
+        border-radius: 3px;
+        flex-shrink: 0;
+        margin-top: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+        font-size: 11px;
+        color: transparent;
+      }
+
+      .task-card.done .checkbox {
+        background: var(--done-border);
+        border-color: var(--done-border);
+        color: #fff;
+      }
+
+      .task-name {
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--text);
+        line-height: 1.4;
+      }
+
+      .task-card.done .task-name {
+        text-decoration: line-through;
+        color: var(--muted);
+      }
+
+      .task-meta {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .tag {
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        padding: 2px 7px;
+        border-radius: 2px;
+        background: var(--surface);
+        color: var(--muted);
+        border: 1px solid var(--border);
+        letter-spacing: 0.5px;
+      }
+
+      .difficulty {
+        margin-left: auto;
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .difficulty.hard {
+        color: var(--accent3);
+      }
+      .difficulty.medium {
+        color: #ffb347;
+      }
+      .difficulty.easy {
+        color: #8bc34a;
+      }
+
+      /* ── MENTOR TIP ── */
+      .mentor-tip {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 8px 8px 0;
+        padding: 16px 20px;
+        margin: 20px 0 8px;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+      }
+
+      .mentor-avatar {
+        font-size: 22px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .mentor-text {
+        font-size: 13px;
+        color: var(--muted);
+        font-style: italic;
+        line-height: 1.6;
+      }
+
+      .mentor-text strong {
+        color: var(--accent);
+        font-style: normal;
+        font-weight: 600;
+      }
+
+      /* ── NOTES ── */
+      .notes-area {
+        width: 100%;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        color: var(--text);
+        font-family: "DM Mono", monospace;
+        font-size: 12px;
+        padding: 12px 14px;
+        resize: vertical;
+        min-height: 70px;
+        margin-top: 12px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      .notes-area:focus {
+        border-color: var(--accent);
+      }
+      .notes-area::placeholder {
+        color: var(--muted);
+      }
+
+      /* ── SUMMARY STRIP ── */
+      .summary-strip {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(12, 12, 14, 0.92);
+        backdrop-filter: blur(12px);
+        border-top: 1px solid var(--border);
+        padding: 12px 40px;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        z-index: 100;
+      }
+
+      .summary-strip .stat {
+        font-family: "DM Mono", monospace;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .summary-strip .stat strong {
+        color: var(--accent);
+        font-size: 18px;
+      }
+
+      .reset-btn {
+        margin-left: auto;
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        padding: 6px 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+
+      .reset-btn:hover {
+        border-color: var(--accent3);
+        color: var(--accent3);
+      }
+
+      /* ── ANIMATIONS ── */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ── PRINT ── */
+      @media print {
+        .summary-strip {
+          display: none;
+        }
+        body {
+          background: #fff;
+          color: #000;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .hero {
+          padding: 40px 20px 36px;
+        }
+        .container {
+          padding: 24px 20px 100px;
+        }
+        .task-grid {
+          grid-template-columns: 1fr;
+        }
+        .summary-strip {
+          padding: 12px 20px;
+          gap: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-label">
+        👨‍💻 Mentor's Worksheet · Your Personal Roadmap
+      </div>
+      <h1>SENIOR<br /><span>ENGINEER</span><br />ROADMAP</h1>
+      <p class="hero-sub">
+        Tick off every skill. I'll guide you through foundations, systems
+        thinking, architecture, and the soft skills that separate seniors from
+        everyone else.
+      </p>
+      <div class="hero-meta">
+        <div class="pill">Phases <strong>6</strong></div>
+        <div class="pill">Tasks <strong id="total-count">--</strong></div>
+        <div class="pill">Est. <strong>12–18 months</strong></div>
+        <div class="pill">Level <strong>0 → Senior</strong></div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-label">
+          <span>Overall Progress</span>
+          <span id="progress-pct">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- ═══════════════════════════════════ PHASE 1 ═════════════════════════════ -->
+      <section class="phase">
+        <div class="phase-header">
+          <span class="phase-number">01</span>
+          <span class="phase-title" style="color: #8bc34a"
+            >Foundation &amp; CS Core</span
+          >
+          <span class="phase-badge badge-foundation">Month 1–2</span>
+        </div>
+
+        <div class="mentor-tip">
+          <span class="mentor-avatar">🧑‍🏫</span>
+          <p class="mentor-text">
+            Before we touch frameworks, you need a <strong>bedrock</strong>. CS
+            fundamentals are what keep a senior engineer calm when everyone else
+            panics. Nail these and you'll debug faster, architect better, and
+            write code that lasts.
+          </p>
+        </div>
+
+        <div class="task-grid" id="phase1">
+          <div
+            class="task-card"
+            style="--accent-color: #8bc34a"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Understand Big-O Notation & complexity analysis (time +
+                space)</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">algorithms</span
+              ><span class="difficulty easy">★ Easy</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #8bc34a"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Master arrays, linked lists, stacks, queues — implement from
+                scratch</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">data structures</span
+              ><span class="difficulty easy">★ Easy</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #8bc34a"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Learn hash maps, sets, trees (BST, AVL), heaps, tries</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">data structures</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #8bc34a"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Graph algorithms: BFS, DFS, Dijkstra, topological sort</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">algorithms</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #8bc34a"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Sorting algorithms: merge sort, quicksort — know WHY, not just
+                HOW</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">algorithms</span
+              ><span class="difficulty easy">★ Easy</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #8bc34a"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Dynamic programming: memoization vs tabulation, 10 classic
+                problems</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">algorithms</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #8bc34a"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Recursion & backtracking — solve 5 problems using each</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">algorithms</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #8bc34a"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >How memory works: stack vs heap, pointers, garbage
+                collection</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">computer science</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #8bc34a"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >OS basics: processes, threads, concurrency, deadlocks, CPU
+                scheduling</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">os</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #8bc34a"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Complete 50+ LeetCode problems (Easy → Medium — NO Hard
+                yet)</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">practice</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+        </div>
+        <textarea
+          class="notes-area"
+          placeholder="📝 Phase 1 notes — resources, struggles, breakthroughs..."
+        ></textarea>
+      </section>
+
+      <!-- ═══════════════════════════════════ PHASE 2 ═════════════════════════════ -->
+      <section class="phase">
+        <div class="phase-header">
+          <span class="phase-number">02</span>
+          <span class="phase-title" style="color: #47b8ff"
+            >Core Engineering Skills</span
+          >
+          <span class="phase-badge badge-core">Month 2–5</span>
+        </div>
+
+        <div class="mentor-tip">
+          <span class="mentor-avatar">🧑‍🏫</span>
+          <p class="mentor-text">
+            This phase is about
+            <strong>writing production-quality code</strong>. Most juniors write
+            code that works. Seniors write code that works, is readable,
+            testable, and won't blow up at 2am. Every item here is
+            non-negotiable.
+          </p>
+        </div>
+
+        <div class="task-grid">
+          <div
+            class="task-card"
+            style="--accent-color: #47b8ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Master one language deeply (Python or JavaScript/TypeScript
+                recommended)</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">language</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47b8ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >OOP: SOLID principles — write a project that violates each,
+                then fix it</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">design</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47b8ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Design patterns: Factory, Singleton, Observer, Strategy,
+                Decorator (implement each)</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">design patterns</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47b8ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Git mastery: branching strategies, rebase vs merge,
+                cherry-pick, bisect</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">git</span
+              ><span class="difficulty easy">★ Easy</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47b8ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Testing pyramid: unit, integration, e2e — achieve 80%+ coverage
+                on a project</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">testing</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47b8ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >TDD: write a full feature test-first — feel the
+                difference</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">testing</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47b8ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Clean Code: meaningful naming, small functions, zero magic
+                numbers, no dead code</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">code quality</span
+              ><span class="difficulty easy">★ Easy</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47b8ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >REST API design: design a full RESTful API with proper HTTP
+                verbs, status codes, pagination</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">backend</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47b8ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >SQL mastery: joins, indexes, EXPLAIN, transactions, ACID
+                properties</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">databases</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47b8ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Understand NoSQL trade-offs: Redis (caching), MongoDB, when to
+                use each</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">databases</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47b8ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Linux command line proficiency: grep, awk, sed, pipes,
+                permissions, cron</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">linux</span
+              ><span class="difficulty easy">★ Easy</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47b8ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Docker fundamentals: write a Dockerfile, docker-compose for a
+                multi-service app</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">devops</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+        </div>
+        <textarea
+          class="notes-area"
+          placeholder="📝 Phase 2 notes — resources, struggles, breakthroughs..."
+        ></textarea>
+      </section>
+
+      <!-- ═══════════════════════════════════ PHASE 3 ═════════════════════════════ -->
+      <section class="phase">
+        <div class="phase-header">
+          <span class="phase-number">03</span>
+          <span class="phase-title" style="color: #ff6b9d"
+            >Systems & Architecture</span
+          >
+          <span class="phase-badge badge-advanced">Month 5–8</span>
+        </div>
+
+        <div class="mentor-tip">
+          <span class="mentor-avatar">🧑‍🏫</span>
+          <p class="mentor-text">
+            Welcome to <strong>the senior mindset</strong>. Juniors think in
+            functions. Seniors think in systems. This phase breaks your brain in
+            the best way. You'll never look at a URL the same way again.
+          </p>
+        </div>
+
+        <div class="task-grid">
+          <div
+            class="task-card"
+            style="--accent-color: #ff6b9d"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >What happens when you type a URL? Explain every layer in
+                detail</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">networking</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ff6b9d"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >HTTP/HTTPS, TCP/IP, TLS handshake, DNS, CDN — explain to a
+                non-engineer</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">networking</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ff6b9d"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >System Design: design Twitter feed, URL shortener, rate
+                limiter</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">system design</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ff6b9d"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >CAP theorem: understand consistency vs availability trade-offs
+                with real examples</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">distributed systems</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ff6b9d"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Load balancing: round-robin, least connections, consistent
+                hashing</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">system design</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ff6b9d"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Caching strategies: cache-aside, write-through, TTL, cache
+                invalidation</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">system design</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ff6b9d"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Message queues: Kafka or RabbitMQ — build a pub/sub
+                system</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">distributed systems</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ff6b9d"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Microservices vs monolith: when to use each, understand
+                strangler fig pattern</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">architecture</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ff6b9d"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Database sharding, replication, master-slave vs
+                master-master</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">databases</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ff6b9d"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >API design: REST vs GraphQL vs gRPC — build a small service in
+                each</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">backend</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+        </div>
+        <textarea
+          class="notes-area"
+          placeholder="📝 Phase 3 notes — resources, struggles, breakthroughs..."
+        ></textarea>
+      </section>
+
+      <!-- ═══════════════════════════════════ PHASE 4 ═════════════════════════════ -->
+      <section class="phase">
+        <div class="phase-header">
+          <span class="phase-number">04</span>
+          <span class="phase-title" style="color: #b847ff"
+            >Cloud, DevOps & Security</span
+          >
+          <span class="phase-badge badge-senior">Month 8–11</span>
+        </div>
+
+        <div class="mentor-tip">
+          <span class="mentor-avatar">🧑‍🏫</span>
+          <p class="mentor-text">
+            In <strong>2025, every senior engineer ships</strong> — not just
+            codes. You need to own your deployment pipeline, understand security
+            at every layer, and keep systems observable. This is the "full
+            stack" that matters.
+          </p>
+        </div>
+
+        <div class="task-grid">
+          <div
+            class="task-card"
+            style="--accent-color: #b847ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >AWS/GCP/Azure: deploy a 3-tier app (frontend, API, database) to
+                the cloud</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">cloud</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #b847ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Kubernetes basics: pods, deployments, services, ingress —
+                deploy with k8s</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">k8s</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #b847ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >CI/CD pipeline: build a full pipeline with GitHub Actions or
+                GitLab CI</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">devops</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #b847ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Infrastructure as Code: Terraform or Pulumi — provision cloud
+                resources from code</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">iac</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #b847ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Observability: set up logging (ELK), metrics (Prometheus +
+                Grafana), tracing (Jaeger)</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">monitoring</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #b847ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >OWASP Top 10: understand and demonstrate each vulnerability in
+                a test app</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">security</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #b847ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Auth patterns: JWT, OAuth2, OpenID Connect — implement a full
+                auth system</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">security</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #b847ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Performance optimization: profiling tools, flame graphs,
+                identify and fix bottlenecks</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">performance</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #b847ff"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >SLAs, SLOs, SLIs — write an incident post-mortem after a real
+                (or simulated) outage</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">reliability</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+        </div>
+        <textarea
+          class="notes-area"
+          placeholder="📝 Phase 4 notes — resources, struggles, breakthroughs..."
+        ></textarea>
+      </section>
+
+      <!-- ═══════════════════════════════════ PHASE 5 ═════════════════════════════ -->
+      <section class="phase">
+        <div class="phase-header">
+          <span class="phase-number">05</span>
+          <span class="phase-title" style="color: #ffb347"
+            >Senior Soft Skills</span
+          >
+          <span class="phase-badge badge-soft">Month 10–13</span>
+        </div>
+
+        <div class="mentor-tip">
+          <span class="mentor-avatar">🧑‍🏫</span>
+          <p class="mentor-text">
+            Here's the secret nobody tells you:
+            <strong
+              >the biggest gap between mid and senior isn't technical</strong
+            >. It's communication, ownership, and judgment. A senior who can't
+            explain their decisions or mentor others isn't truly senior.
+          </p>
+        </div>
+
+        <div class="task-grid">
+          <div
+            class="task-card"
+            style="--accent-color: #ffb347"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Do 10 mock code reviews — give detailed, constructive feedback
+                (not just "looks good")</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">code review</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ffb347"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Technical writing: write 3 architecture decision records (ADRs)
+                for past decisions</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">communication</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ffb347"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Estimation: practice breaking down tasks, track accuracy over 2
+                months</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">planning</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ffb347"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Present a technical topic to a non-technical audience (record
+                yourself)</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">communication</span
+              ><span class="difficulty easy">★ Easy</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ffb347"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Mentor a junior developer for at least 4 weeks — teach what you
+                know</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">mentorship</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ffb347"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Navigate a technical disagreement: write down your position,
+                argue it, then steelman the opposition</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">judgment</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ffb347"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >On-call simulation: set up alerts, simulate a high-severity
+                incident, run a runbook</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">reliability</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #ffb347"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Agile/Scrum: participate in or simulate a full sprint cycle —
+                retro, planning, standups</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">process</span
+              ><span class="difficulty easy">★ Easy</span>
+            </div>
+          </div>
+        </div>
+        <textarea
+          class="notes-area"
+          placeholder="📝 Phase 5 notes — resources, struggles, breakthroughs..."
+        ></textarea>
+      </section>
+
+      <!-- ═══════════════════════════════════ PHASE 6 ═════════════════════════════ -->
+      <section class="phase">
+        <div class="phase-header">
+          <span class="phase-number">06</span>
+          <span class="phase-title" style="color: #47ffe8"
+            >Portfolio & Interview Prep</span
+          >
+          <span class="phase-badge badge-portfolio">Month 13–18</span>
+        </div>
+
+        <div class="mentor-tip">
+          <span class="mentor-avatar">🧑‍🏫</span>
+          <p class="mentor-text">
+            You've built the skills. Now <strong>show the world</strong>. Your
+            portfolio isn't a list of technologies — it's a story of problems
+            you solved. Make it impossible to say no to hiring you.
+          </p>
+        </div>
+
+        <div class="task-grid">
+          <div
+            class="task-card"
+            style="--accent-color: #47ffe8"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Build a capstone project: full-stack, deployed, with CI/CD,
+                tests, and documentation</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">portfolio</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47ffe8"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Open source contribution: merge at least 1 PR to a real
+                project</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">open source</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47ffe8"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Technical blog: write 5 posts about things you learned — teach
+                to learn deeper</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">writing</span
+              ><span class="difficulty easy">★ Easy</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47ffe8"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >System design interview: practice 10 full mock sessions (use
+                Pramp or a partner)</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">interviews</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47ffe8"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >Behavioral interviews: STAR method for 15 situations
+                (conflicts, failures, wins)</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">interviews</span
+              ><span class="difficulty medium">★★ Medium</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47ffe8"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >LeetCode: solve 30 medium + 10 hard problems under timed
+                conditions</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">coding interview</span
+              ><span class="difficulty hard">★★★ Hard</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47ffe8"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >GitHub profile: green contribution graph, pinned repos with
+                READMEs worth reading</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">portfolio</span
+              ><span class="difficulty easy">★ Easy</span>
+            </div>
+          </div>
+
+          <div
+            class="task-card"
+            style="--accent-color: #47ffe8"
+            onclick="toggle(this)"
+          >
+            <div class="task-top">
+              <div class="checkbox">✓</div>
+              <span class="task-name"
+                >LinkedIn + resume: quantified achievements, no buzzwords — get
+                3 people to review it</span
+              >
+            </div>
+            <div class="task-meta">
+              <span class="tag">career</span
+              ><span class="difficulty easy">★ Easy</span>
+            </div>
+          </div>
+        </div>
+        <textarea
+          class="notes-area"
+          placeholder="📝 Phase 6 notes — resources, struggles, breakthroughs..."
+        ></textarea>
+      </section>
+    </div>
+
+    <!-- SUMMARY STRIP -->
+    <div class="summary-strip">
+      <div class="stat"><strong id="done-count">0</strong><br />done</div>
+      <div class="stat"><strong id="left-count">--</strong><br />remaining</div>
+      <div class="stat" style="flex: 1; max-width: 200px">
+        <div class="progress-track" style="max-width: 100%">
+          <div class="progress-fill" id="bottom-fill"></div>
+        </div>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
+    </div>
+
+    <script>
+      const STORAGE_KEY = "senior-eng-worksheet-v1";
+
+      function saveState() {
+        const cards = document.querySelectorAll(".task-card");
+        const state = [];
+        cards.forEach((c, i) => state.push(c.classList.contains("done")));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function loadState() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const state = JSON.parse(raw);
+        const cards = document.querySelectorAll(".task-card");
+        cards.forEach((c, i) => {
+          if (state[i]) c.classList.add("done");
+        });
+      }
+
+      function toggle(card) {
+        card.classList.toggle("done");
+        updateStats();
+        saveState();
+      }
+
+      function resetAll() {
+        if (!confirm("Reset all progress?")) return;
+        document
+          .querySelectorAll(".task-card")
+          .forEach((c) => c.classList.remove("done"));
+        localStorage.removeItem(STORAGE_KEY);
+        updateStats();
+      }
+
+      function updateStats() {
+        const all = document.querySelectorAll(".task-card");
+        const done = document.querySelectorAll(".task-card.done");
+        const pct = Math.round((done.length / all.length) * 100);
+
+        document.getElementById("total-count").textContent = all.length;
+        document.getElementById("done-count").textContent = done.length;
+        document.getElementById("left-count").textContent =
+          all.length - done.length;
+        document.getElementById("progress-pct").textContent = pct + "%";
+        document.getElementById("progress-fill").style.width = pct + "%";
+        document.getElementById("bottom-fill").style.width = pct + "%";
+      }
+
+      // Save notes
+      document.querySelectorAll(".notes-area").forEach((ta, i) => {
+        const k = "notes-" + i;
+        ta.value = localStorage.getItem(k) || "";
+        ta.addEventListener("input", () => localStorage.setItem(k, ta.value));
+      });
+
+      loadState();
+      updateStats();
+    </script>
+  </body>
+</html>

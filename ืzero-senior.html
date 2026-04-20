@@ -1,0 +1,1847 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zero to Senior — Complete Beginner's Roadmap</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inconsolata:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1a1814;
+        --paper: #f7f4ee;
+        --cream: #ede9e0;
+        --warm: #e8e2d5;
+        --rule: #d4cfc5;
+        --muted: #9a948a;
+        --accent: #c84b2f;
+        --accent2: #2f6ec8;
+        --accent3: #2ea86e;
+        --accent4: #c87c2f;
+        --accent5: #8b2fc8;
+        --shadow: rgba(26, 24, 20, 0.08);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Lora", serif;
+        line-height: 1.7;
+        font-size: 15px;
+      }
+      /* COVER */
+      .cover {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 80px 60px;
+        background: var(--ink);
+        color: var(--paper);
+        overflow: hidden;
+      }
+      .cover-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(247, 244, 238, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(247, 244, 238, 0.04) 1px, transparent 1px);
+        background-size: 60px 60px;
+      }
+      .cover-corner {
+        position: absolute;
+        top: 40px;
+        right: 40px;
+        font-family: "Inconsolata", monospace;
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: rgba(247, 244, 238, 0.25);
+        text-transform: uppercase;
+        writing-mode: vertical-rl;
+      }
+      .cover-eyebrow {
+        font-family: "Inconsolata", monospace;
+        font-size: 11px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 28px;
+        opacity: 0;
+        animation: rise 0.7s 0.1s forwards;
+      }
+      .cover h1 {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: clamp(48px, 9vw, 110px);
+        line-height: 0.9;
+        letter-spacing: -2px;
+        opacity: 0;
+        animation: rise 0.7s 0.2s forwards;
+      }
+      .cover h1 em {
+        font-style: normal;
+        color: var(--accent);
+        display: block;
+      }
+      .cover-sub {
+        margin-top: 32px;
+        max-width: 520px;
+        font-size: 17px;
+        color: rgba(247, 244, 238, 0.55);
+        font-style: italic;
+        opacity: 0;
+        animation: rise 0.7s 0.35s forwards;
+      }
+      .cover-stats {
+        margin-top: 48px;
+        display: flex;
+        gap: 0;
+        border: 1px solid rgba(247, 244, 238, 0.12);
+        border-radius: 2px;
+        max-width: 560px;
+        opacity: 0;
+        animation: rise 0.7s 0.45s forwards;
+      }
+      .cover-stat {
+        flex: 1;
+        padding: 20px 24px;
+        border-right: 1px solid rgba(247, 244, 238, 0.12);
+      }
+      .cover-stat:last-child {
+        border-right: none;
+      }
+      .stat-val {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 28px;
+        color: var(--paper);
+        display: block;
+        line-height: 1;
+      }
+      .stat-label {
+        font-family: "Inconsolata", monospace;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(247, 244, 238, 0.35);
+        margin-top: 4px;
+        display: block;
+      }
+      .cover-progress-wrap {
+        margin-top: 48px;
+        max-width: 560px;
+        opacity: 0;
+        animation: rise 0.7s 0.55s forwards;
+      }
+      .cover-progress-label {
+        display: flex;
+        justify-content: space-between;
+        font-family: "Inconsolata", monospace;
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: rgba(247, 244, 238, 0.35);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .cover-track {
+        height: 2px;
+        background: rgba(247, 244, 238, 0.1);
+      }
+      .cover-fill {
+        height: 100%;
+        background: var(--accent);
+        transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+        width: 0%;
+      }
+      .scroll-hint {
+        position: absolute;
+        bottom: 40px;
+        left: 60px;
+        font-family: "Inconsolata", monospace;
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: rgba(247, 244, 238, 0.2);
+        text-transform: uppercase;
+        opacity: 0;
+        animation: rise 0.7s 0.9s forwards;
+      }
+      /* PHASE */
+      .phase {
+        border-bottom: 1px solid var(--rule);
+      }
+      .phase-inner {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 60px 48px;
+      }
+      .phase-head {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 24px;
+        align-items: start;
+        margin-bottom: 36px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--rule);
+      }
+      .phase-num {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 72px;
+        line-height: 1;
+        color: var(--rule);
+        min-width: 80px;
+        text-align: right;
+        margin-top: -8px;
+      }
+      .phase-timeline {
+        font-family: "Inconsolata", monospace;
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      .phase-title {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 26px;
+        line-height: 1.1;
+      }
+      .phase-tag {
+        display: inline-block;
+        font-family: "Inconsolata", monospace;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 5px 12px;
+        border-radius: 2px;
+        border: 1px solid;
+        white-space: nowrap;
+      }
+      /* MENTOR NOTE */
+      .mentor-note {
+        background: var(--cream);
+        border-left: 3px solid var(--ink);
+        padding: 20px 24px;
+        margin-bottom: 32px;
+        border-radius: 0 4px 4px 0;
+        display: flex;
+        gap: 16px;
+      }
+      .mentor-icon {
+        font-size: 20px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .mentor-note p {
+        font-size: 14px;
+        color: #4a463e;
+        font-style: italic;
+        line-height: 1.65;
+      }
+      .mentor-note p strong {
+        font-style: normal;
+        color: var(--ink);
+        font-weight: 600;
+      }
+      /* TASKS */
+      .tasks {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .task {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 14px 18px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          border-color 0.15s,
+          transform 0.1s;
+      }
+      .task:hover {
+        background: var(--cream);
+        border-color: #c4bfb5;
+        transform: translateX(2px);
+      }
+      .task.done {
+        background: #f0faf4;
+        border-color: #b5dfca;
+      }
+      .task.done .task-text {
+        text-decoration: line-through;
+        color: var(--muted);
+      }
+      .check {
+        width: 20px;
+        height: 20px;
+        border: 1.5px solid var(--rule);
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-top: 1px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        font-size: 11px;
+        color: transparent;
+      }
+      .task.done .check {
+        background: var(--accent3);
+        border-color: var(--accent3);
+        color: #fff;
+      }
+      .task-body {
+        flex: 1;
+      }
+      .task-text {
+        font-size: 14px;
+        color: var(--ink);
+        line-height: 1.5;
+        font-family: "Lora", serif;
+      }
+      .task-hint {
+        font-family: "Inconsolata", monospace;
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 3px;
+        display: block;
+      }
+      .task-right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 4px;
+        flex-shrink: 0;
+      }
+      .diff {
+        font-family: "Inconsolata", monospace;
+        font-size: 10px;
+        letter-spacing: 1px;
+        padding: 2px 8px;
+        border-radius: 2px;
+        text-transform: uppercase;
+      }
+      .diff-1 {
+        background: #e8f5ec;
+        color: #2ea86e;
+      }
+      .diff-2 {
+        background: #fff4e6;
+        color: #c87c2f;
+      }
+      .diff-3 {
+        background: #fdecea;
+        color: #c84b2f;
+      }
+      .task-tag {
+        font-family: "Inconsolata", monospace;
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.5px;
+      }
+      /* NOTES */
+      .phase-notes {
+        margin-top: 28px;
+      }
+      .notes-label {
+        font-family: "Inconsolata", monospace;
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+        display: block;
+      }
+      textarea.notes {
+        width: 100%;
+        background: var(--cream);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 14px 16px;
+        font-family: "Inconsolata", monospace;
+        font-size: 12.5px;
+        color: var(--ink);
+        resize: vertical;
+        min-height: 80px;
+        outline: none;
+        transition: border-color 0.2s;
+        line-height: 1.7;
+      }
+      textarea.notes:focus {
+        border-color: var(--ink);
+      }
+      textarea.notes::placeholder {
+        color: var(--muted);
+      }
+      /* FOOTER */
+      .footer-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--ink);
+        color: var(--paper);
+        padding: 14px 48px;
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        z-index: 200;
+        border-top: 2px solid var(--accent);
+      }
+      .f-stat {
+        font-family: "Inconsolata", monospace;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(247, 244, 238, 0.4);
+      }
+      .f-stat strong {
+        color: var(--paper);
+        font-size: 20px;
+        display: block;
+        line-height: 1;
+        letter-spacing: 0;
+        margin-bottom: 2px;
+      }
+      .f-bar {
+        flex: 1;
+        height: 2px;
+        background: rgba(247, 244, 238, 0.1);
+        max-width: 300px;
+      }
+      .f-fill {
+        height: 100%;
+        background: var(--accent);
+        transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        width: 0%;
+      }
+      .f-pct {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 22px;
+        color: var(--accent);
+        min-width: 52px;
+        text-align: right;
+      }
+      .reset-btn {
+        margin-left: auto;
+        background: transparent;
+        border: 1px solid rgba(247, 244, 238, 0.2);
+        color: rgba(247, 244, 238, 0.4);
+        font-family: "Inconsolata", monospace;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 8px 16px;
+        border-radius: 2px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .reset-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @media (max-width: 640px) {
+        .cover {
+          padding: 48px 28px;
+        }
+        .cover-stats {
+          flex-direction: column;
+        }
+        .phase-inner {
+          padding: 40px 24px;
+        }
+        .phase-head {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+        .phase-num {
+          font-size: 40px;
+          min-width: auto;
+          text-align: left;
+        }
+        .footer-bar {
+          padding: 12px 20px;
+          gap: 16px;
+        }
+        .f-bar {
+          max-width: 80px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="cover">
+      <div class="cover-grid"></div>
+      <div class="cover-corner">Complete Beginner → Senior Engineer</div>
+      <div class="cover-eyebrow">
+        👨‍🏫 Your Mentor's Personal Roadmap · 2025 Edition
+      </div>
+      <h1>ZERO<br />TO<br /><em>SENIOR.</em></h1>
+      <p class="cover-sub">
+        You know nothing yet — and that's the best starting point. Every expert
+        was once exactly where you are. This worksheet is your contract with
+        your future self.
+      </p>
+      <div class="cover-stats">
+        <div class="cover-stat">
+          <span class="stat-val">7</span><span class="stat-label">Phases</span>
+        </div>
+        <div class="cover-stat">
+          <span class="stat-val" id="total-val">--</span
+          ><span class="stat-label">Missions</span>
+        </div>
+        <div class="cover-stat">
+          <span class="stat-val">18mo</span
+          ><span class="stat-label">Timeline</span>
+        </div>
+        <div class="cover-stat">
+          <span class="stat-val">0→∞</span><span class="stat-label">Level</span>
+        </div>
+      </div>
+      <div class="cover-progress-wrap">
+        <div class="cover-progress-label">
+          <span>Your Progress</span><span id="cover-pct">0%</span>
+        </div>
+        <div class="cover-track">
+          <div class="cover-fill" id="cover-fill"></div>
+        </div>
+      </div>
+      <div class="scroll-hint">↓ Scroll to begin</div>
+    </section>
+
+    <main>
+      <!-- PHASE 0 -->
+      <section class="phase">
+        <div class="phase-inner">
+          <div class="phase-head">
+            <div class="phase-num">00</div>
+            <div class="phase-info">
+              <div class="phase-timeline">
+                Week 1–2 · Before you write a single line
+              </div>
+              <div class="phase-title" style="color: var(--accent)">
+                Set Up Your Environment
+              </div>
+            </div>
+            <div>
+              <span
+                class="phase-tag"
+                style="color: var(--accent); border-color: var(--accent)"
+                >Start Here</span
+              >
+            </div>
+          </div>
+          <div class="mentor-note">
+            <span class="mentor-icon">🧑‍🏫</span>
+            <p>
+              Welcome. Before we write any code, we need to build your
+              <strong>workspace</strong>. Think of a surgeon — they don't
+              operate with rusty tools. A properly configured environment will
+              save you hundreds of hours of frustration. Do every item here. No
+              shortcuts.
+            </p>
+          </div>
+          <div class="tasks">
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Install VS Code and learn the 10 most important keyboard
+                  shortcuts
+                </div>
+                <span class="task-hint"
+                  >💡 Must-know: Ctrl+P (find file), Ctrl+Shift+P (command
+                  palette), Alt+click (multi-cursor)</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">tools</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Install Node.js and Python 3 — understand what a runtime is
+                </div>
+                <span class="task-hint"
+                  >💡 A runtime is the engine that executes your code. Python
+                  runs .py files, Node runs .js files.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">setup</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Learn the terminal / command line — navigate folders, create
+                  files, run scripts
+                </div>
+                <span class="task-hint"
+                  >💡 Master: cd, ls, mkdir, touch, rm, cat, pwd — spend 2
+                  focused hours on just this</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">terminal</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Create a GitHub account and make your first repository
+                </div>
+                <span class="task-hint"
+                  >💡 GitHub is where the world keeps its code. Every employer
+                  will look at yours.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">git</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Learn Git basics from the terminal: init, add, commit, push,
+                  pull — never use a GUI yet
+                </div>
+                <span class="task-hint"
+                  >💡 Git is a time machine for your code. You will use this
+                  every single day for the rest of your career.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">git</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Understand what the internet is: client, server, request,
+                  response — draw a diagram by hand
+                </div>
+                <span class="task-hint"
+                  >💡 When you type google.com, what actually happens step by
+                  step? Sketch it on paper.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">concepts</span>
+              </div>
+            </div>
+          </div>
+          <div class="phase-notes">
+            <span class="notes-label">Your Notes</span
+            ><textarea
+              class="notes"
+              placeholder="What did you install? What confused you? What clicked? Write everything down — future you will thank you..."
+            ></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 1 -->
+      <section class="phase">
+        <div class="phase-inner">
+          <div class="phase-head">
+            <div class="phase-num">01</div>
+            <div class="phase-info">
+              <div class="phase-timeline">
+                Month 1–2 · Learn to think like a programmer
+              </div>
+              <div class="phase-title" style="color: var(--accent2)">
+                Programming Fundamentals
+              </div>
+            </div>
+            <div>
+              <span
+                class="phase-tag"
+                style="color: var(--accent2); border-color: var(--accent2)"
+                >Foundation</span
+              >
+            </div>
+          </div>
+          <div class="mentor-note">
+            <span class="mentor-icon">🧑‍🏫</span>
+            <p>
+              Pick <strong>one language and stick with it</strong>. I recommend
+              Python — it reads like English and teaches concepts without
+              fighting syntax. Don't try to learn multiple languages at once.
+              You're not learning syntax, you're learning
+              <strong>how to decompose problems</strong>. That skill transfers
+              to every language.
+            </p>
+          </div>
+          <div class="tasks">
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Variables, data types (int, string, bool, list, dict) — write
+                  20 examples for each type
+                </div>
+                <span class="task-hint"
+                  >💡 Don't just read — TYPE the examples yourself. Your hands
+                  need to learn too.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">python</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Control flow: if/else, for loops, while loops — build a
+                  number-guessing game
+                </div>
+                <span class="task-hint"
+                  >💡 Project: guess a random number 1–100, give "too high"/"too
+                  low" hints, count the tries.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">python</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Functions: parameters, return values, scope — write 10 small,
+                  well-named reusable functions
+                </div>
+                <span class="task-hint"
+                  >💡 A function should do ONE thing. Name it clearly:
+                  get_user_age(), not process_stuff().</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">python</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Lists and dictionaries: slicing, methods, looping — build a
+                  contact book app in the terminal
+                </div>
+                <span class="task-hint"
+                  >💡 Project: add, remove, search contacts stored in a dict.
+                  Run from terminal, no UI needed.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">python</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Error handling: try/except — learn to read stack traces.
+                  Errors are clues, not insults.
+                </div>
+                <span class="task-hint"
+                  >💡 Intentionally cause 5 different types of errors and read
+                  every line of the traceback carefully.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">python</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  File I/O: read and write text files and JSON — make your
+                  contact book persist between runs
+                </div>
+                <span class="task-hint"
+                  >💡 Save contacts to contacts.json on exit, load them on
+                  startup. Now your app has memory.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">python</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Complete 30 exercises on Exercism.io (Easy only) — solve each
+                  one 2 different ways
+                </div>
+                <span class="task-hint"
+                  >💡 Struggle is the point. It's literally building new neural
+                  pathways. The discomfort is the lesson.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">practice</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Build Project #1: To-do CLI app — add, complete, delete, list
+                  tasks, saved to JSON. Push to GitHub.
+                </div>
+                <span class="task-hint"
+                  >💡 Your first real project on GitHub. You'll look back at
+                  this with pride. Write a README.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">project</span>
+              </div>
+            </div>
+          </div>
+          <div class="phase-notes">
+            <span class="notes-label">Your Notes</span
+            ><textarea
+              class="notes"
+              placeholder="Which concepts confused you most? How long did each exercise take? Note your Project #1 GitHub link..."
+            ></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 2 -->
+      <section class="phase">
+        <div class="phase-inner">
+          <div class="phase-head">
+            <div class="phase-num">02</div>
+            <div class="phase-info">
+              <div class="phase-timeline">
+                Month 2–4 · Build things you can show people
+              </div>
+              <div class="phase-title" style="color: var(--accent4)">
+                Web Development Basics
+              </div>
+            </div>
+            <div>
+              <span
+                class="phase-tag"
+                style="color: var(--accent4); border-color: var(--accent4)"
+                >Hands-On</span
+              >
+            </div>
+          </div>
+          <div class="mentor-note">
+            <span class="mentor-icon">🧑‍🏫</span>
+            <p>
+              The web is the largest platform in human history. You need to
+              understand <strong>HTML, CSS, and JavaScript</strong> — not to be
+              a designer, but because every system you'll build touches the web.
+              Also: building something you can open in a browser and show your
+              family <strong>feels amazing</strong> and keeps you going when
+              things get hard.
+            </p>
+          </div>
+          <div class="tasks">
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  HTML fundamentals: semantic tags, forms, links, images — build
+                  a personal bio page
+                </div>
+                <span class="task-hint"
+                  >💡 HTML is the skeleton. Use semantic tags: &lt;nav&gt;,
+                  &lt;main&gt;, &lt;article&gt; — not just &lt;div&gt; for
+                  everything.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">html</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  CSS: box model, flexbox, grid, colours, fonts, responsive
+                  media queries
+                </div>
+                <span class="task-hint"
+                  >💡 Box model + flexbox unlocks 80% of all layouts. Master
+                  these two before anything else.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">css</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  JavaScript basics: DOM manipulation, events, fetch API,
+                  async/await
+                </div>
+                <span class="task-hint"
+                  >💡 JS makes pages interactive. Start by making a button
+                  change text, then fetch data from an API.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">javascript</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Call a free public API (weather, jokes, Pokémon) and display
+                  live data on a webpage
+                </div>
+                <span class="task-hint"
+                  >💡 Try api.open-meteo.com (weather). This is how every modern
+                  app works — fetching live data.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">javascript</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Git branching: create a feature branch, make changes, merge
+                  back to main, resolve a conflict
+                </div>
+                <span class="task-hint"
+                  >💡 Branches = parallel universes for your code. Work on
+                  features without ever touching main.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">git</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Deploy your first live website on GitHub Pages or Vercel
+                  (free)
+                </div>
+                <span class="task-hint"
+                  >💡 Your software is on the real internet. Share the URL. This
+                  moment matters more than you think.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">deployment</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Build Project #2: Weather dashboard — search any city, show
+                  forecast, deployed live with a URL
+                </div>
+                <span class="task-hint"
+                  >💡 HTML + CSS + JS + public API + GitHub Pages. This is your
+                  first real portfolio piece.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">project</span>
+              </div>
+            </div>
+          </div>
+          <div class="phase-notes">
+            <span class="notes-label">Your Notes</span
+            ><textarea
+              class="notes"
+              placeholder="What was the hardest CSS concept? What did it feel like to see your first deployed page live? Note the URL..."
+            ></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 3 -->
+      <section class="phase">
+        <div class="phase-inner">
+          <div class="phase-head">
+            <div class="phase-num">03</div>
+            <div class="phase-info">
+              <div class="phase-timeline">
+                Month 4–7 · Where real apps are built
+              </div>
+              <div class="phase-title" style="color: var(--accent3)">
+                Backend & Databases
+              </div>
+            </div>
+            <div>
+              <span
+                class="phase-tag"
+                style="color: var(--accent3); border-color: var(--accent3)"
+                >Core Skills</span
+              >
+            </div>
+          </div>
+          <div class="mentor-note">
+            <span class="mentor-icon">🧑‍🏫</span>
+            <p>
+              Frontends are the face. <strong>Backends are the brain</strong>.
+              This is where you learn to build APIs — the glue between apps and
+              databases. By the end of this phase, you'll understand how every
+              app you've ever used actually works under the hood. This phase
+              will be hard. <strong>That's correct.</strong> Push through it.
+            </p>
+          </div>
+          <div class="tasks">
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Understand HTTP deeply: GET, POST, PUT, DELETE, status codes
+                  (200, 404, 500, 401, 403)
+                </div>
+                <span class="task-hint"
+                  >💡 Open DevTools → Network tab on any website. Watch every
+                  single request your browser makes.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">backend</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Build a REST API with Express.js or FastAPI — full CRUD for a
+                  "notes" resource
+                </div>
+                <span class="task-hint"
+                  >💡 CRUD = Create, Read, Update, Delete. Build: POST /notes,
+                  GET /notes/:id, PUT, DELETE.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">backend</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  SQL fundamentals: SELECT, INSERT, UPDATE, DELETE, WHERE, JOIN
+                  — start with SQLite (zero setup)
+                </div>
+                <span class="task-hint"
+                  >💡 Every database uses the same core SQL. Master it once, use
+                  it everywhere.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">databases</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Database design: primary keys, foreign keys, relationships —
+                  design a schema for an e-commerce store
+                </div>
+                <span class="task-hint"
+                  >💡 Draw on paper: users, products, orders, order_items. What
+                  connects to what?</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">databases</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Connect your API to a real PostgreSQL database — no more data
+                  stored in arrays in memory
+                </div>
+                <span class="task-hint"
+                  >💡 Use Prisma (JS) or SQLAlchemy (Python). Save and retrieve
+                  real persistent data.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">backend</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Authentication: user sign-up, login, JWT tokens, bcrypt
+                  password hashing
+                </div>
+                <span class="task-hint"
+                  >💡 RULE #1: NEVER store plain-text passwords. Always bcrypt.
+                  No exceptions. Ever.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-3">Challenging</span
+                ><span class="task-tag">security</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Test your API manually with Postman or Insomnia — test every
+                  route, including error cases
+                </div>
+                <span class="task-hint"
+                  >💡 Postman is your API workshop. Break things on purpose.
+                  What happens with bad inputs?</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">testing</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Write your first automated unit tests — cover at least 5
+                  functions with Jest or Pytest
+                </div>
+                <span class="task-hint"
+                  >💡 A test is: "if I give X, I expect Y." Start with pure
+                  functions — no database, no network.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">testing</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Build Project #3: Full-stack blog — React frontend + API
+                  backend + PostgreSQL + auth + deployed
+                </div>
+                <span class="task-hint"
+                  >💡 Users register, log in, create/edit/delete posts. This is
+                  your flagship portfolio piece.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-3">Challenging</span
+                ><span class="task-tag">project</span>
+              </div>
+            </div>
+          </div>
+          <div class="phase-notes">
+            <span class="notes-label">Your Notes</span
+            ><textarea
+              class="notes"
+              placeholder="What was hardest to understand about databases? Any auth bugs? Note your Project #3 GitHub and live URL..."
+            ></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 4 -->
+      <section class="phase">
+        <div class="phase-inner">
+          <div class="phase-head">
+            <div class="phase-num">04</div>
+            <div class="phase-info">
+              <div class="phase-timeline">
+                Month 7–10 · Think bigger than one file
+              </div>
+              <div class="phase-title" style="color: var(--accent5)">
+                CS Fundamentals & Clean Code
+              </div>
+            </div>
+            <div>
+              <span
+                class="phase-tag"
+                style="color: var(--accent5); border-color: var(--accent5)"
+                >Level Up</span
+              >
+            </div>
+          </div>
+          <div class="mentor-note">
+            <span class="mentor-icon">🧑‍🏫</span>
+            <p>
+              By now you can build things. Now we make you
+              <strong>dangerous</strong>. CS fundamentals separate engineers who
+              hit walls from those who break through them. You don't need a CS
+              degree — but you need to understand
+              <strong>how computers think</strong>. This phase also teaches you
+              to write code other humans can actually read.
+            </p>
+          </div>
+          <div class="tasks">
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Big-O Notation: understand O(1), O(n), O(n²), O(log n) —
+                  analyse your own existing code
+                </div>
+                <span class="task-hint"
+                  >💡 Ask: "If my input doubles, what happens to the runtime?"
+                  This is how you spot slow code before it hurts.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">algorithms</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Data structures: arrays, linked lists, stacks, queues, hash
+                  maps — implement each from scratch
+                </div>
+                <span class="task-hint"
+                  >💡 Implementing from scratch teaches you what your language
+                  hides. You'll understand libraries far better.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">data structures</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Trees and graphs: binary search trees, BFS, DFS — find a
+                  real-world use case for each
+                </div>
+                <span class="task-hint"
+                  >💡 File systems are trees. Social networks are graphs. You
+                  use these every day without knowing it.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-3">Challenging</span
+                ><span class="task-tag">data structures</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Solve 40 LeetCode Easy problems — no looking at solutions for
+                  the first 30 minutes of each
+                </div>
+                <span class="task-hint"
+                  >💡 That discomfort is your brain building new circuits.
+                  Embrace it. Log every solution with notes.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">practice</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  OOP: classes, inheritance, encapsulation, polymorphism —
+                  refactor your contact book using classes
+                </div>
+                <span class="task-hint"
+                  >💡 Take your Phase 1 project and rewrite it with proper OOP.
+                  Feel how structure changes everything.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">design</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Clean Code: meaningful names, small functions, zero magic
+                  numbers — refactor a messy codebase
+                </div>
+                <span class="task-hint"
+                  >💡 Read the first 5 chapters of Clean Code by Robert Martin.
+                  They will permanently change how you code.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">code quality</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  SOLID principles: read and find 1 real example of each in an
+                  open-source GitHub project
+                </div>
+                <span class="task-hint"
+                  >💡 Single Responsibility, Open/Closed, Liskov Substitution,
+                  Interface Segregation, Dependency Inversion.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-3">Challenging</span
+                ><span class="task-tag">design</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Design patterns: implement Factory, Observer, and Strategy —
+                  use each in a small real program
+                </div>
+                <span class="task-hint"
+                  >💡 Patterns are reusable solutions to common problems.
+                  Seniors recognise them instantly.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-3">Challenging</span
+                ><span class="task-tag">design patterns</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Get your project code reviewed — fix every single piece of
+                  feedback, understand why
+                </div>
+                <span class="task-hint"
+                  >💡 Don't argue with feedback. Fix it first, understand it
+                  second, then decide if you agree. Humility scales.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">craft</span>
+              </div>
+            </div>
+          </div>
+          <div class="phase-notes">
+            <span class="notes-label">Your Notes</span
+            ><textarea
+              class="notes"
+              placeholder="Which data structure was hardest to implement? What pattern surprised you? Note your LeetCode count..."
+            ></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 5 -->
+      <section class="phase">
+        <div class="phase-inner">
+          <div class="phase-head">
+            <div class="phase-num">05</div>
+            <div class="phase-info">
+              <div class="phase-timeline">
+                Month 10–13 · Own the entire lifecycle
+              </div>
+              <div class="phase-title" style="color: var(--accent)">
+                DevOps, Cloud & Systems Thinking
+              </div>
+            </div>
+            <div>
+              <span
+                class="phase-tag"
+                style="color: var(--accent); border-color: var(--accent)"
+                >Senior Territory</span
+              >
+            </div>
+          </div>
+          <div class="mentor-note">
+            <span class="mentor-icon">🧑‍🏫</span>
+            <p>
+              Senior engineers don't just write code — they
+              <strong>own the entire lifecycle</strong>: build, test, deploy,
+              monitor, fix at 3am. This phase will make you valuable in any
+              company. Engineers who understand systems end-to-end are
+              <strong>10× more impactful</strong> than those who can only code
+              locally.
+            </p>
+          </div>
+          <div class="tasks">
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Docker: containerise your full-stack project — write a
+                  Dockerfile and docker-compose.yml
+                </div>
+                <span class="task-hint"
+                  >💡 "Works on my machine" ends with Docker. Containers run
+                  identically everywhere.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">docker</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  CI/CD: set up GitHub Actions to auto-run tests and auto-deploy
+                  on every push to main
+                </div>
+                <span class="task-hint"
+                  >💡 Every push: tests run → build happens → deploy fires.
+                  Automated. Every time. No exceptions.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">devops</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Cloud basics (AWS free tier): deploy backend to EC2, store
+                  files in S3, understand IAM roles
+                </div>
+                <span class="task-hint"
+                  >💡 Start small. One EC2 instance, one S3 bucket. Feel how
+                  cloud infrastructure works.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-3">Challenging</span
+                ><span class="task-tag">cloud</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Intro to system design: design Pastebin from scratch — draw
+                  the full architecture
+                </div>
+                <span class="task-hint"
+                  >💡 Think: where is data stored, how does traffic reach the
+                  server, what if a million people use it?</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-3">Challenging</span
+                ><span class="task-tag">system design</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Caching: add Redis to your project — use it for sessions, rate
+                  limiting, or frequently-read data
+                </div>
+                <span class="task-hint"
+                  >💡 Redis is lightning-fast in-memory storage. Cache expensive
+                  database queries to save milliseconds.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-3">Challenging</span
+                ><span class="task-tag">system design</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Security: rate limiting, input validation, SQL injection
+                  prevention, env vars for secrets
+                </div>
+                <span class="task-hint"
+                  >💡 Never trust user input. Never hardcode secrets.
+                  Parameterise all SQL. Never build your own crypto.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-3">Challenging</span
+                ><span class="task-tag">security</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Monitoring: add structured logging and set up error alerts via
+                  Sentry (free tier)
+                </div>
+                <span class="task-hint"
+                  >💡 If your app breaks in production at 3am, you want to know
+                  before your users do.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">monitoring</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Build Project #4: Production-grade API — Docker + CI/CD +
+                  cloud deploy + monitoring + full test suite
+                </div>
+                <span class="task-hint"
+                  >💡 This runs in the cloud, tests itself on every push, and
+                  alerts you when it breaks. That's real engineering.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-3">Challenging</span
+                ><span class="task-tag">project</span>
+              </div>
+            </div>
+          </div>
+          <div class="phase-notes">
+            <span class="notes-label">Your Notes</span
+            ><textarea
+              class="notes"
+              placeholder="What was the hardest cloud concept? Any deployment war stories? Note your CI/CD pipeline and deployed API URL..."
+            ></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 6 -->
+      <section class="phase">
+        <div class="phase-inner">
+          <div class="phase-head">
+            <div class="phase-num">06</div>
+            <div class="phase-info">
+              <div class="phase-timeline">
+                Month 13–18 · You know things. Now prove it.
+              </div>
+              <div class="phase-title" style="color: var(--accent2)">
+                Portfolio, Interviews & Landing the Job
+              </div>
+            </div>
+            <div>
+              <span
+                class="phase-tag"
+                style="color: var(--accent2); border-color: var(--accent2)"
+                >Final Stretch</span
+              >
+            </div>
+          </div>
+          <div class="mentor-note">
+            <span class="mentor-icon">🧑‍🏫</span>
+            <p>
+              The final phase is about <strong>translation</strong> — converting
+              everything you know into opportunities. Interviewing is a skill
+              separate from engineering, and you must practise it specifically.
+              Your portfolio isn't a gallery; it's a
+              <strong>proof of your judgement</strong>. Show problems you solved
+              and decisions you made — not just a list of technologies.
+            </p>
+          </div>
+          <div class="tasks">
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Solve 30 LeetCode Medium problems under time pressure (45 min
+                  each, no hints allowed)
+                </div>
+                <span class="task-hint"
+                  >💡 After each: write your approach, your mistakes, and the
+                  optimal solution in your own words.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-3">Challenging</span
+                ><span class="task-tag">interviews</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  System design practice: design YouTube, Uber, and WhatsApp —
+                  use the framework every time
+                </div>
+                <span class="task-hint"
+                  >💡 Framework: clarify scope → estimate scale → high-level
+                  design → deep dives → identify bottlenecks.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-3">Challenging</span
+                ><span class="task-tag">interviews</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Behavioural prep: write 15 STAR stories covering failures,
+                  conflicts, ownership, and impact
+                </div>
+                <span class="task-hint"
+                  >💡 STAR = Situation, Task, Action, Result. Seniors are hired
+                  for judgment — your stories prove it.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">interviews</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Open source contribution: find a "good first issue", fix a bug
+                  or improve docs, get a PR merged
+                </div>
+                <span class="task-hint"
+                  >💡 Your first merged OSS PR is a career milestone. It shows
+                  you can work in a real codebase.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">open source</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Write and publish 5 technical blog posts about things you
+                  actually learned and struggled with
+                </div>
+                <span class="task-hint"
+                  >💡 "If you can't explain it simply, you don't understand it
+                  well enough." — Feynman. Teaching deepens learning.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">writing</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  GitHub portfolio: 3 pinned projects with READMEs that explain
+                  WHY you built it, not just what
+                </div>
+                <span class="task-hint"
+                  >💡 Bad: "A todo app built with React." Good: "I built this to
+                  learn state management and discovered..."</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-1">Beginner</span
+                ><span class="task-tag">portfolio</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Do 5 live mock interviews on Pramp.com — record yourself
+                  watching back is uncomfortable and invaluable
+                </div>
+                <span class="task-hint"
+                  >💡 Watching yourself code under pressure reveals habits you
+                  never knew you had.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-3">Challenging</span
+                ><span class="task-tag">interviews</span>
+              </div>
+            </div>
+            <div class="task" onclick="toggle(this)">
+              <div class="check">✓</div>
+              <div class="task-body">
+                <div class="task-text">
+                  Apply to 20 roles — treat every rejection as data, not a
+                  verdict. Ask for feedback when possible.
+                </div>
+                <span class="task-hint"
+                  >💡 Senior engineers fail interviews too. Every no is closer
+                  to a yes. The number is the strategy.</span
+                >
+              </div>
+              <div class="task-right">
+                <span class="diff diff-2">Moderate</span
+                ><span class="task-tag">career</span>
+              </div>
+            </div>
+          </div>
+          <div class="phase-notes">
+            <span class="notes-label">Your Notes</span
+            ><textarea
+              class="notes"
+              placeholder="Which system design was hardest? Your best STAR story? Note your OSS PR link, blog URL, and any offers received..."
+            ></textarea>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER BAR -->
+    <div class="footer-bar">
+      <div class="f-stat"><strong id="f-done">0</strong>done</div>
+      <div class="f-stat"><strong id="f-left">--</strong>left</div>
+      <div class="f-bar"><div class="f-fill" id="f-fill"></div></div>
+      <div class="f-pct" id="f-pct">0%</div>
+      <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
+    </div>
+
+    <script>
+      const STORE = "zero-to-senior-v2";
+
+      function saveState() {
+        const s = [...document.querySelectorAll(".task")].map((t) =>
+          t.classList.contains("done"),
+        );
+        localStorage.setItem(STORE, JSON.stringify(s));
+      }
+
+      function loadState() {
+        const raw = localStorage.getItem(STORE);
+        if (!raw) return;
+        JSON.parse(raw).forEach((done, i) => {
+          const tasks = document.querySelectorAll(".task");
+          if (tasks[i] && done) tasks[i].classList.add("done");
+        });
+      }
+
+      function toggle(el) {
+        el.classList.toggle("done");
+        update();
+        saveState();
+      }
+
+      function resetAll() {
+        if (!confirm("Reset all progress? This cannot be undone.")) return;
+        document
+          .querySelectorAll(".task")
+          .forEach((t) => t.classList.remove("done"));
+        localStorage.removeItem(STORE);
+        update();
+      }
+
+      function update() {
+        const all = document.querySelectorAll(".task").length;
+        const done = document.querySelectorAll(".task.done").length;
+        const pct = all ? Math.round((done / all) * 100) : 0;
+        document.getElementById("total-val").textContent = all;
+        document.getElementById("f-done").textContent = done;
+        document.getElementById("f-left").textContent = all - done;
+        document.getElementById("f-pct").textContent = pct + "%";
+        document.getElementById("f-fill").style.width = pct + "%";
+        document.getElementById("cover-pct").textContent = pct + "%";
+        document.getElementById("cover-fill").style.width = pct + "%";
+      }
+
+      document.querySelectorAll("textarea.notes").forEach((ta, i) => {
+        const k = "note-" + i;
+        ta.value = localStorage.getItem(k) || "";
+        ta.addEventListener("input", () => localStorage.setItem(k, ta.value));
+      });
+
+      loadState();
+      update();
+    </script>
+  </body>
+</html>
